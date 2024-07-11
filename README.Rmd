@@ -1,0 +1,96 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# GO-a-GO
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+GO-a-GO annotates functional terms that are overrepresented in a given set of
+gene pairs. The enrichment of Gene Ontology terms is calculated from a
+permutation test for overrepresentation of gene pairs that are associated with a
+common term.
+
+## Installation
+
+You can install the development version of GOaGO from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("ajank/GOaGO")
+```
+
+## Example
+
+Let us run GO-a-GO on a set of gene pairs associated with human GM12878-specific
+chromatin loops. We can inspect a few rows of the dataset:
+
+```{r dataset}
+library(GOaGO)
+
+tail(genePairsGM12878Specific)
+```
+
+The column names ending with `1` and `2` refer to the first and second loop
+anchors, respectively. The essential columns are: `geneID1` and `geneID2` (gene
+identifiers from a database of choice), `pairID` (identifier of a gene pair),
+and `loopID` (identifier of a chromatin loop).  As some loop anchors overlapped
+Transcription Start Sites of multiple genes, the dataset contains all gene
+combinations for these loops.
+
+When running GO-a-GO, we should specify that gene identifiers are from the
+ENTREZ database, and use the Bioconductor `org.Hs.eg.db` package as the source
+of Gene Ontology annotations for human genes, taking all three subontologies
+(Biological Process, Molecular Function, and Cellular Component). We will run
+10,000 permutations, and use the default *p*-value cutoff of 0.05 with
+Benjamini-Hochberg correction:
+
+```{r example, message=FALSE}
+library(org.Hs.eg.db)
+
+# set the number of CPU threads to use
+library(BiocParallel)
+options(MulticoreParam=MulticoreParam(workers=2))
+
+goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
+               OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)
+```
+
+The overrepresented GO terms are as follows:
+
+```{r result}
+print(goago@result)
+```
+
+Note that some of the *p*-values have the value of zero, which means that for
+all the randomizations fewer gene pairs were associated with a given term than
+in the input dataset.
+
+We can plot the overrepresented GO terms as a dotplot. The x-axis shows the
+log~2~ fold change of the fraction of gene pairs sharing the given term; `Ratio`
+is the fraction in the input gene pairs, while `BgRatio` is the fraction in
+permuted ones. Color indicates the adjusted *p*-value:
+
+```{r dotplot}
+DotPlot(goago)
+```
+
+We can also see the sampling distributions of numbers of gene pairs sharing each
+GO term, obtained for the randomized gene pairs. From these distributions,
+empirical *p*-values were calculated:
+
+```{r ridgeplot}
+RidgePlot(goago)
+```

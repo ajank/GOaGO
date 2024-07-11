@@ -1,0 +1,21 @@
+Package: GOaGO
+Title: Gene Ontology enrichment analysis in a set of gene pairs
+Version: 0.99.0
+Authors@R: person("Aleksander", "Jankowski",
+    email = "aleksander.jankowski@uw.edu.pl",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-2212-6224"))
+Description: GO-a-GO annotates functional terms that are overrepresented in a
+    given set of gene pairs. The enrichment of Gene Ontology terms is calculated
+    from a permutation test for overrepresentation of gene pairs that are
+    associated with a common term.
+License: GPL (>= 3)
+Encoding: UTF-8
+Imports: BiocParallel, clusterProfiler, data.table, ggplot2, ggridges, methods, qvalue
+Depends: 
+    R (>= 2.10)
+biocViews: GO, GeneSetEnrichment
+URL: https://github.com/ajank/GOaGO
+BugReports: https://github.com/ajank/GOaGO/issues
+RoxygenNote: 7.3.2
+LazyData: true
