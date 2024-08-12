@@ -22,7 +22,7 @@ setClass("GOaGO-result",
         # pvalueCutoff   = "numeric",
         # pAdjustMethod  = "character",
         # qvalueCutoff   = "numeric",
-        # termPairsCutoff
+        # minTermPairs
         # number of permutations
         # organism       = "character",
         # ontology       = "character",
@@ -49,8 +49,8 @@ setClass("GOaGO-result",
 ##' @param keyType keytype of input gene
 ##' @param ont One of "BP", "MF", and "CC" subontologies, or "ALL" for all
 ##'   three.
-##' @param termPairsCutoff cutoff for number of pairs that share a GO term for
-##'   this term to be considered
+##' @param minTermPairs cutoff for number of pairs that share a GO term for this
+##'   term to be considered
 ##' @param numPermutations number of permutations performed in the enrichment
 ##'   test
 ##' @param universe a set of background genes. If missing, all the genes from
@@ -69,7 +69,7 @@ setClass("GOaGO-result",
 ##' @export
 
 GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
-    termPairsCutoff = 1, numPermutations = 10000L, universe,
+    minTermPairs = 1, numPermutations = 10000L, universe,
     pvalueCutoff = 0.05, pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500) {
     # ensure that gene identifiers are provided in the input data
     stopifnot("geneID1" %in% colnames(genePairs))
@@ -154,8 +154,8 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
 
     pairCountsPerTerm <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix)
 
-    # take only the GO terms that are associated to at least termPairsCutoff gene pairs
-    sel <- which(pairCountsPerTerm >= termPairsCutoff)
+    # take only the GO terms that are associated to at least minTermPairs gene pairs
+    sel <- which(pairCountsPerTerm >= minTermPairs)
     ID_universe_reduced <- ID_universe[sel]
     pairCountsPerTerm_reduced <- pairCountsPerTerm[sel]
     geneTermMatrix_reduced <- geneTermMatrix[, sel]

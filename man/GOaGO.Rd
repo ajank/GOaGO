@@ -9,7 +9,7 @@ GOaGO(
   OrgDb,
   keyType = "ENTREZID",
   ont = "MF",
-  termPairsCutoff = 1,
+  minTermPairs = 1,
   numPermutations = 10000L,
   universe,
   pvalueCutoff = 0.05,
@@ -30,8 +30,8 @@ containing gene identifiers.}
 \item{ont}{One of "BP", "MF", and "CC" subontologies, or "ALL" for all
 three.}
 
-\item{termPairsCutoff}{cutoff for number of pairs that share a GO term for
-this term to be considered}
+\item{minTermPairs}{cutoff for number of pairs that share a GO term for this
+term to be considered}
 
 \item{numPermutations}{number of permutations performed in the enrichment
 test}

@@ -14,15 +14,15 @@ sortedResult <- function(goago) {
 ##' sharing the given terms. Color indicates the adjusted p-value.
 ##'
 ##' @param goago GO-a-GO results of class \code{GOaGO-result}
-##' @param termPairsCutoff take only the GO terms that are associated to at
-##'   least termPairsCutoff gene pairs
+##' @param minTermPairs take only the GO terms that are associated to at least
+##'   the given number of gene pairs
 ##' @returns A ggplot object that can be further customized using the
 ##'   \code{ggplot2} package.
 ##' @export
 
-DotPlot <- function(goago, termPairsCutoff = 5) {
+DotPlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
-    dt <- dt[Count >= termPairsCutoff, ]
+    dt <- dt[Count >= minTermPairs, ]
 
     p <- ggplot(dt, aes(x=log2(Ratio/BgRatio), y=label, size=Count, color=p.adjust)) +
         geom_point() +
@@ -38,15 +38,15 @@ DotPlot <- function(goago, termPairsCutoff = 5) {
 ##' each Gene Ontology term, obtained for the randomized gene pairs.
 ##'
 ##' @param goago GO-a-GO results of class \code{GOaGO-result}
-##' @param termPairsCutoff take only the GO terms that are associated to at
-##'   least termPairsCutoff gene pairs
+##' @param minTermPairs take only the GO terms that are associated to at least
+##'   the given number of gene pairs
 ##' @returns A ggplot object that can be further customized using the
 ##'   \code{ggplot2} package.
 ##' @export
 
-RidgePlot <- function(goago, termPairsCutoff = 5) {
+RidgePlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
-    dt <- dt[Count >= termPairsCutoff, ]
+    dt <- dt[Count >= minTermPairs, ]
 
     dt2 <- merge(dt[, c("ID", "label")], goago@permutedResult, by = "ID")
 
