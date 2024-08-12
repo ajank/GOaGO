@@ -13,7 +13,7 @@ associated with a common term.
 
 ## Installation
 
-You can install the development version of GOaGO from
+You can install the development version of GO-a-GO from
 [GitHub](https://github.com/) with:
 
 ``` r

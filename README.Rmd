@@ -25,7 +25,7 @@ common term.
 
 ## Installation
 
-You can install the development version of GOaGO from [GitHub](https://github.com/) with:
+You can install the development version of GO-a-GO from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
