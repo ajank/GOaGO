@@ -127,7 +127,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
             gene2 <- genePairsMatrix[, 2]
         }
 
-        bw <- geneTermMatrix[gene1, ] & geneTermMatrix[gene2, ]
+        bw <- geneTermMatrix[gene1, , drop=FALSE] & geneTermMatrix[gene2, , drop=FALSE]
         result <- as.integer(colSums(bw))
         return(result)
     }
@@ -137,7 +137,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     {
         gene1 <- genePairsMatrix[, 1]
         gene2 <- genePairsMatrix[, 2]
-        bw <- geneTermMatrix[gene1, ] & geneTermMatrix[gene2, ]
+        bw <- geneTermMatrix[gene1, , drop=FALSE] & geneTermMatrix[gene2, , drop=FALSE]
         return(bw)
     }
 
@@ -147,7 +147,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     sel <- which(pairCountsPerTerm >= minTermPairs)
     ID_universe_reduced <- ID_universe[sel]
     pairCountsPerTerm_reduced <- pairCountsPerTerm[sel]
-    geneTermMatrix_reduced <- geneTermMatrix[, sel]
+    geneTermMatrix_reduced <- geneTermMatrix[, sel, drop=FALSE]
 
     # TODO handle properly the case numPermutations == 0
     # associate actual and permuted gene pairs with their GO terms
@@ -189,8 +189,8 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     # take only the GO terms that are significantly overrepresented
     result <- result[sel_signif, ]
     ID_universe_reduced_signif <- ID_universe_reduced[sel_signif]
-    geneTermMatrix_reduced_signif <- geneTermMatrix_reduced[, sel_signif]
-    permutedPairCountsPerTerm_reduced_signif <- permutedPairCountsPerTerm_reduced[, sel_signif]
+    geneTermMatrix_reduced_signif <- geneTermMatrix_reduced[, sel_signif, drop=FALSE]
+    permutedPairCountsPerTerm_reduced_signif <- permutedPairCountsPerTerm_reduced[, sel_signif, drop=FALSE]
 
     # construct sparse pair x terms matrix, convert it to tidy format
     pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif), arr.ind=TRUE)
