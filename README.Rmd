@@ -8,6 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  dev = "png",
+  dev.args = list(png = list(type = "cairo")),
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
