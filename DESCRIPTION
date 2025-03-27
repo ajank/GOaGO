@@ -11,7 +11,7 @@ Description: GO-a-GO annotates functional terms that are overrepresented in a
     associated with a common term.
 License: GPL (>= 3)
 Encoding: UTF-8
-Imports: BiocParallel, clusterProfiler, data.table, ggplot2, ggridges, methods, qvalue
+Imports: BiocParallel, clusterProfiler, data.table, ggplot2, ggridges, Matrix, methods, qvalue
 Depends: 
     R (>= 2.10)
 biocViews: GO, GeneSetEnrichment

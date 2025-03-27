@@ -108,18 +108,9 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     # matrix (not a data frame) defining the gene pairs
     genePairsMatrix <- cbind(factor(genePairs$geneID1, universe), factor(genePairs$geneID2, universe))
 
-    # data table matching genes to terms
-    geneTermMatching <- data.table(geneIndex = as.integer(go_split$geneID), termIndex = as.integer(go_split$ID))
-
-    # gene x term matrix
-    geneTermMatrix <- dcast(geneTermMatching, geneIndex ~ termIndex, fun.aggregate = length)
-    geneTermMatrix <- merge(geneTermMatrix, data.table(geneIndex = seq_along(universe)), all = T)
-    setnafill(geneTermMatrix, fill=0L)
-    stopifnot(geneTermMatrix$geneIndex == seq_along(universe))
-    geneTermMatrix[, geneIndex := NULL]
-    geneTermMatrix <- as.matrix(geneTermMatrix)
-    stopifnot(colnames(geneTermMatrix) == seq_along(ID_universe))
-    dimnames(geneTermMatrix) <- NULL
+    # construct sparse gene x term matrix
+    geneTermMatrix <- Matrix(FALSE, nrow = length(universe), ncol = length(ID_universe), sparse = TRUE, doDiag = FALSE)
+    geneTermMatrix[cbind(as.integer(go_split$geneID), as.integer(go_split$ID))] <- TRUE
 
     # now do the actual permutation testing
     countGenePairsPerTerm <- function(genePairsMatrix, geneTermMatrix, permuted = FALSE)
@@ -136,8 +127,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
             gene2 <- genePairsMatrix[, 2]
         }
 
-        bw <- bitwAnd(geneTermMatrix[gene1, ], geneTermMatrix[gene2, ])
-        dim(bw) <- c(nrow(genePairsMatrix), ncol(geneTermMatrix))
+        bw <- geneTermMatrix[gene1, ] & geneTermMatrix[gene2, ]
         result <- as.integer(colSums(bw))
         return(result)
     }
@@ -147,8 +137,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     {
         gene1 <- genePairsMatrix[, 1]
         gene2 <- genePairsMatrix[, 2]
-        bw <- bitwAnd(geneTermMatrix[gene1, ], geneTermMatrix[gene2, ])
-        dim(bw) <- c(nrow(genePairsMatrix), ncol(geneTermMatrix))
+        bw <- geneTermMatrix[gene1, ] & geneTermMatrix[gene2, ]
         return(bw)
     }
 
@@ -203,8 +192,8 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     geneTermMatrix_reduced_signif <- geneTermMatrix_reduced[, sel_signif]
     permutedPairCountsPerTerm_reduced_signif <- permutedPairCountsPerTerm_reduced[, sel_signif]
 
-    # construct pair x terms matrix, convert it to wide format
-    pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif) > 0, arr.ind=TRUE)
+    # construct sparse pair x terms matrix, convert it to tidy format
+    pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif), arr.ind=TRUE)
     pairTerms <- data.table()
     if ("pairID" %in% colnames(genePairs))
         pairTerms$pairID <- genePairs$pairID[pt[, 1]]
@@ -212,7 +201,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
         pairTerms$pairID <- pt[, 1]
     pairTerms$ID <- factor(ID_universe_reduced_signif)[pt[, 2]]
 
-    # convert the results of the permutations to wide format
+    # convert the results of the permutations to tidy format
     permutedResult <- data.table(
         ID = factor(ID_universe_reduced_signif)[as.vector(col(permutedPairCountsPerTerm_reduced_signif))],
         Count = as.vector(permutedPairCountsPerTerm_reduced_signif))
