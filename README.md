@@ -82,24 +82,45 @@ The overrepresented GO terms are as follows:
 
 ``` r
 print(goago@result)
-#>   ONTOLOGY         ID                         Description Count       Ratio
-#> 1       BP GO:0034728             nucleosome organization     8 0.009864365
-#> 2       BP GO:0006334                 nucleosome assembly     8 0.009864365
-#> 3       BP GO:0065004        protein-DNA complex assembly     8 0.009864365
-#> 4       CC GO:0000786                          nucleosome    16 0.019728730
-#> 5       MF GO:0030527 structural constituent of chromatin    16 0.019728730
-#> 6       MF GO:0046982 protein heterodimerization activity    16 0.019728730
-#> 7       BP GO:0007608         sensory perception of smell     5 0.006165228
-#> 8       MF GO:0023023         MHC protein complex binding     4 0.004932182
-#>        BgRatio pvalue p.adjust     qvalue
-#> 1 0.0008122072  0e+00 0.000000 0.00000000
-#> 2 0.0006606658  0e+00 0.000000 0.00000000
-#> 3 0.0012011097  0e+00 0.000000 0.00000000
-#> 4 0.0007096178  0e+00 0.000000 0.00000000
-#> 5 0.0006099877  0e+00 0.000000 0.00000000
-#> 6 0.0013130703  0e+00 0.000000 0.00000000
-#> 7 0.0005589396  2e-04 0.022925 0.01918421
-#> 8 0.0003787916  2e-04 0.022925 0.01918421
+#>    ONTOLOGY         ID
+#> 1        BP GO:0034728
+#> 2        BP GO:0006334
+#> 3        BP GO:0071824
+#> 4        BP GO:0065004
+#> 5        CC GO:0000786
+#> 6        CC GO:0032993
+#> 7        MF GO:0030527
+#> 8        MF GO:0046982
+#> 9        BP GO:0050911
+#> 10       MF GO:0004984
+#> 11       BP GO:0007608
+#> 12       MF GO:0023023
+#>                                                               Description Count
+#> 1                                                 nucleosome organization     8
+#> 2                                                     nucleosome assembly     8
+#> 3                                        protein-DNA complex organization     8
+#> 4                                            protein-DNA complex assembly     8
+#> 5                                                              nucleosome    16
+#> 6                                                     protein-DNA complex    16
+#> 7                                     structural constituent of chromatin    16
+#> 8                                     protein heterodimerization activity    16
+#> 9  detection of chemical stimulus involved in sensory perception of smell     4
+#> 10                                            olfactory receptor activity     4
+#> 11                                            sensory perception of smell     5
+#> 12                                            MHC protein complex binding     4
+#>          Ratio      BgRatio pvalue   p.adjust      qvalue
+#> 1  0.009864365 0.0009080148  0e+00 0.00000000 0.000000000
+#> 2  0.009864365 0.0007563502  0e+00 0.00000000 0.000000000
+#> 3  0.009864365 0.0013872996  0e+00 0.00000000 0.000000000
+#> 4  0.009864365 0.0012680641  0e+00 0.00000000 0.000000000
+#> 5  0.019728730 0.0007101110  0e+00 0.00000000 0.000000000
+#> 6  0.019728730 0.0011393342  0e+00 0.00000000 0.000000000
+#> 7  0.019728730 0.0006098644  0e+00 0.00000000 0.000000000
+#> 8  0.019728730 0.0015272503  0e+00 0.00000000 0.000000000
+#> 9  0.004932182 0.0004277435  1e-04 0.01016000 0.008526316
+#> 10 0.004932182 0.0004277435  1e-04 0.01016000 0.008526316
+#> 11 0.006165228 0.0006046856  2e-04 0.01847273 0.015502392
+#> 12 0.004932182 0.0003940814  5e-04 0.04233333 0.035526316
 ```
 
 Note that some of the *p*-values have the value of zero, which means
@@ -128,7 +149,7 @@ distributions, empirical *p*-values were calculated:
 
 ``` r
 RidgePlot(goago)
-#> Picking joint bandwidth of 0.115
+#> Picking joint bandwidth of 0.12
 ```
 
 <img src="man/figures/README-ridgeplot-1.png" width="100%" />
