@@ -147,7 +147,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     stopifnot(!anyDuplicated(ID_universe))
     # take only the relevant columns
     go_split <- egoResult[, list(geneID = factor(strsplit(geneID, "/")[[1]], universe)),
-        by = list(ID = factor(ID, ID_universe))]
+        by = list(ID = factor(ID, ID_universe)), showProgress = FALSE]
     stopifnot(as.integer(go_split$geneID) == match(go_split$geneID, universe))
     stopifnot(!is.na(go_split$ID))
 
