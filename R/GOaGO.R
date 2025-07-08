@@ -64,16 +64,11 @@ uniqueGenePairs <- function(genePairs) {
     }
 
     n <- nrow(genePairs)
-    genePairs <- unique(genePairs, by = c("geneID1", "geneID2"))
-    if (nrow(genePairs) != n)
-        warning("removing ", n - nrow(genePairs), " repeated gene pair(s)")
-
-    n <- nrow(genePairs)
     genePairs[, gid1 := pmin(geneID1, geneID2)]
     genePairs[, gid2 := pmax(geneID1, geneID2)]
     genePairs <- unique(genePairs, by = c("gid1", "gid2"))
     if (nrow(genePairs) != n)
-        warning("removing ", n - nrow(genePairs), " gene pair(s) provided both as (A, B) and (B, A)")
+        warning("removing ", n - nrow(genePairs), " duplicated gene pair(s)")
     genePairs[, gid1 := NULL]
     genePairs[, gid2 := NULL]
 
