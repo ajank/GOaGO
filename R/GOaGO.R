@@ -38,13 +38,66 @@ setClass("GOaGO-result",
     )
 
 
+##' Extract unique gene pairs from the data frame provided.
+##'
+##' Given a data frame of gene pairs, this function will return the unique
+##  pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
+##  is a duplicate of (B, A).
+##'
+##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
+##'   containing gene identifiers; column \code{pairID} will also be used if
+##    provided.
+
+uniqueGenePairs <- function(genePairs) {
+    # ensure that gene identifiers are provided in the input data
+    stopifnot("geneID1" %in% colnames(genePairs))
+    stopifnot("geneID2" %in% colnames(genePairs))
+
+    # ensure that pair identifiers are unique if provided
+    pairID_provided <- "pairID" %in% colnames(genePairs)
+    if (pairID_provided) {
+        stopifnot(!anyDuplicated(genePairs$pairID))
+        genePairs <- with(genePairs, data.table(pairID, geneID1, geneID2))
+    }
+    else {
+        genePairs <- with(genePairs, data.table(geneID1, geneID2))
+    }
+
+    n <- nrow(genePairs)
+    genePairs <- unique(genePairs, by = c("geneID1", "geneID2"))
+    if (nrow(genePairs) != n)
+        warning("removing ", n - nrow(genePairs), " repeated gene pair(s)")
+
+    n <- nrow(genePairs)
+    genePairs[, gid1 := pmin(geneID1, geneID2)]
+    genePairs[, gid2 := pmax(geneID1, geneID2)]
+    genePairs <- unique(genePairs, by = c("gid1", "gid2"))
+    if (nrow(genePairs) != n)
+        warning("removing ", n - nrow(genePairs), " gene pair(s) provided both as (A, B) and (B, A)")
+    genePairs[, gid1 := NULL]
+    genePairs[, gid2 := NULL]
+
+    n <- nrow(genePairs)
+    genePairs <- genePairs[geneID1 != geneID2, ]
+    if (nrow(genePairs) != n)
+        warning("removing ", n - nrow(genePairs), " gene pair(s) containing the same gene twice")
+
+    if (!pairID_provided) {
+        genePairs[, pairID := .I]
+    }
+
+    return(genePairs)
+}
+
+
 ##' Gene Ontology enrichment analysis in a set of gene pairs.
 ##'
 ##' Given a data frame of gene pairs, this function will return the enriched
 ##' Gene Ontology categories after FDR control.
 ##'
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
-##'   containing gene identifiers.
+##'   containing gene identifiers; column \code{pairID} will also be used if
+##    provided.
 ##' @param OrgDb OrgDb
 ##' @param keyType keytype of input gene
 ##' @param ont One of "BP", "MF", and "CC" subontologies, or "ALL" for all
@@ -71,13 +124,8 @@ setClass("GOaGO-result",
 GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     minTermPairs = 1, numPermutations = 10000L, universe,
     pvalueCutoff = 0.05, pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500) {
-    # ensure that gene identifiers are provided in the input data
-    stopifnot("geneID1" %in% colnames(genePairs))
-    stopifnot("geneID2" %in% colnames(genePairs))
-
-    # ensure that pair identifiers are unique if provided
-    if ("pairID" %in% colnames(genePairs))
-        stopifnot(!anyDuplicated(genePairs$pairID))
+    # extract unique gene pairs from the data frame provided
+    genePairs <- uniqueGenePairs(genePairs)
 
     # gene universe
     if (missing(universe)) {
@@ -190,12 +238,9 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
 
     # construct sparse pair x term matrix, convert it to tidy format
     pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif), arr.ind=TRUE)
-    pairTerms <- data.table()
-    if ("pairID" %in% colnames(genePairs))
-        pairTerms$pairID <- genePairs$pairID[pt[, 1]]
-    else
-        pairTerms$pairID <- pt[, 1]
-    pairTerms$ID <- factor(ID_universe_reduced_signif)[pt[, 2]]
+    pairTerms <- data.table(
+        pairID = genePairs$pairID[pt[, 1]],
+        ID = factor(ID_universe_reduced_signif)[pt[, 2]])
 
     # convert the results of the permutations to tidy format
     permutedResult <- data.table(

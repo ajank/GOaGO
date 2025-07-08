@@ -21,7 +21,7 @@ GOaGO(
 }
 \arguments{
 \item{genePairs}{a data frame with columns \code{geneID1} and \code{geneID2}
-containing gene identifiers.}
+containing gene identifiers; column \code{pairID} will also be used if}
 
 \item{OrgDb}{OrgDb}
 

@@ -76,51 +76,36 @@ options(MulticoreParam=MulticoreParam(workers=2))
 
 goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
                OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)
+#> Warning in uniqueGenePairs(genePairs): removing 6 repeated gene pair(s)
+#> Warning in uniqueGenePairs(genePairs): removing 30 gene pair(s) containing the
+#> same gene twice
 ```
 
-The overrepresented GO terms are as follows:
+We can inspect the overrepresented GO terms:
 
 ``` r
-print(goago@result)
-#>    ONTOLOGY         ID
-#> 1        BP GO:0034728
-#> 2        BP GO:0006334
-#> 3        BP GO:0071824
-#> 4        BP GO:0065004
-#> 5        CC GO:0000786
-#> 6        CC GO:0032993
-#> 7        MF GO:0030527
-#> 8        MF GO:0046982
-#> 9        BP GO:0050911
-#> 10       MF GO:0004984
-#> 11       BP GO:0007608
-#> 12       MF GO:0023023
-#>                                                               Description Count
-#> 1                                                 nucleosome organization     8
-#> 2                                                     nucleosome assembly     8
-#> 3                                        protein-DNA complex organization     8
-#> 4                                            protein-DNA complex assembly     8
-#> 5                                                              nucleosome    16
-#> 6                                                     protein-DNA complex    16
-#> 7                                     structural constituent of chromatin    16
-#> 8                                     protein heterodimerization activity    16
-#> 9  detection of chemical stimulus involved in sensory perception of smell     4
-#> 10                                            olfactory receptor activity     4
-#> 11                                            sensory perception of smell     5
-#> 12                                            MHC protein complex binding     4
-#>          Ratio      BgRatio pvalue   p.adjust      qvalue
-#> 1  0.009864365 0.0009080148  0e+00 0.00000000 0.000000000
-#> 2  0.009864365 0.0007563502  0e+00 0.00000000 0.000000000
-#> 3  0.009864365 0.0013872996  0e+00 0.00000000 0.000000000
-#> 4  0.009864365 0.0012680641  0e+00 0.00000000 0.000000000
-#> 5  0.019728730 0.0007101110  0e+00 0.00000000 0.000000000
-#> 6  0.019728730 0.0011393342  0e+00 0.00000000 0.000000000
-#> 7  0.019728730 0.0006098644  0e+00 0.00000000 0.000000000
-#> 8  0.019728730 0.0015272503  0e+00 0.00000000 0.000000000
-#> 9  0.004932182 0.0004277435  1e-04 0.01016000 0.008526316
-#> 10 0.004932182 0.0004277435  1e-04 0.01016000 0.008526316
-#> 11 0.006165228 0.0006046856  2e-04 0.01847273 0.015502392
-#> 12 0.004932182 0.0003940814  5e-04 0.04233333 0.035526316
+head(goago@result)
+#>   ONTOLOGY         ID
+#> 1       BP GO:0034728
+#> 2       BP GO:0006334
+#> 3       BP GO:0040029
+#> 4       BP GO:0071824
+#> 5       BP GO:0065004
+#> 6       BP GO:0019886
+#>                                                                         Description
+#> 1                                                           nucleosome organization
+#> 2                                                               nucleosome assembly
+#> 3                                          epigenetic regulation of gene expression
+#> 4                                                  protein-DNA complex organization
+#> 5                                                      protein-DNA complex assembly
+#> 6 antigen processing and presentation of exogenous peptide antigen via MHC class II
+#>   Count       Ratio      BgRatio pvalue p.adjust qvalue
+#> 1     8 0.010322581 2.807742e-04      0        0      0
+#> 2     8 0.010322581 2.061935e-04      0        0      0
+#> 3     6 0.007741935 7.201290e-04      0        0      0
+#> 4     8 0.010322581 5.343226e-04      0        0      0
+#> 5     8 0.010322581 4.640000e-04      0        0      0
+#> 6     2 0.002580645 1.987097e-05      0        0      0
 ```
 
 Note that some of the *p*-values have the value of zero, which means
@@ -149,7 +134,7 @@ distributions, empirical *p*-values were calculated:
 
 ``` r
 RidgePlot(goago)
-#> Picking joint bandwidth of 0.12
+#> Picking joint bandwidth of 0.08
 ```
 
 <img src="man/figures/README-ridgeplot-1.png" width="100%" />

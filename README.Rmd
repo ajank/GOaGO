@@ -70,10 +70,10 @@ goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
                OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)
 ```
 
-The overrepresented GO terms are as follows:
+We can inspect the overrepresented GO terms:
 
 ```{r result}
-print(goago@result)
+head(goago@result)
 ```
 
 Note that some of the *p*-values have the value of zero, which means that for

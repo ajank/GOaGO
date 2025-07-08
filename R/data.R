@@ -6,7 +6,7 @@
 ##' Transcription Start Site (TSS) at both loop anchors. As some loop anchors
 ##' overlapped TSSes of multiple genes, the dataset contains all gene
 ##' combinations for these loops, yielding a total of 811 GM12878-specific gene
-##' pairs.
+##' pairs, of which 775 are unique.
 ##'
 ##' @name genePairsGM12878Specific
 ##' @format A data frame with 811 rows and 15 columns:

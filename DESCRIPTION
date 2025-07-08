@@ -1,6 +1,6 @@
 Package: GOaGO
 Title: Gene Ontology enrichment analysis in a set of gene pairs
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: person("Aleksander", "Jankowski",
     email = "aleksander.jankowski@uw.edu.pl",
     role = c("aut", "cre"),
