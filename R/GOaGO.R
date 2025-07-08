@@ -6,6 +6,8 @@
 ##'   term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 ##'   \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
 ##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}
+##' @slot genePairs A data frame with the input gene pairs, with the columns
+##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
 ##' @slot pairTerms A data frame linking the enriched Gene Ontology categories
 ##'   with the input gene pairs, with the columns \code{pairID} and \code{ID}
 ##'   (of the GO term).
@@ -17,6 +19,7 @@
 setClass("GOaGO-result",
     representation=representation(
         result         = "data.frame",
+        genePairs      = "data.frame",
         pairTerms      = "data.frame",
         permutedResult = "data.frame"
         # pvalueCutoff   = "numeric",
@@ -245,6 +248,6 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     # sort the results according to p-value
     result <- result[order(pvalue), ]
 
-    result <- new("GOaGO-result", result = result, pairTerms = pairTerms, permutedResult = permutedResult)
+    result <- new("GOaGO-result", result = result, genePairs = genePairs, pairTerms = pairTerms, permutedResult = permutedResult)
     return(result)
 }

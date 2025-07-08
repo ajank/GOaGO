@@ -17,6 +17,9 @@ term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
 \code{pvalue}, \code{p.adjust}, \code{qvalue}}
 
+\item{\code{genePairs}}{A data frame with the input gene pairs, with the columns
+\code{geneID1}, \code{geneID2} and \code{pairID}.}
+
 \item{\code{pairTerms}}{A data frame linking the enriched Gene Ontology categories
 with the input gene pairs, with the columns \code{pairID} and \code{ID}
 (of the GO term).}
