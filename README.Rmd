@@ -29,7 +29,7 @@ common term.
 
 You can install the development version of GO-a-GO from [GitHub](https://github.com/) with:
 
-``` r
+```{r eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("ajank/GOaGO")
 ```
