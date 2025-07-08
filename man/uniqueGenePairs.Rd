@@ -8,8 +8,11 @@ uniqueGenePairs(genePairs)
 }
 \arguments{
 \item{genePairs}{a data frame with columns \code{geneID1} and \code{geneID2}
-containing gene identifiers; column \code{pairID} will also be used if}
+containing gene identifiers; column \code{pairID} will also be used if
+provided.}
 }
 \description{
 Given a data frame of gene pairs, this function will return the unique
+pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
+is a duplicate of (B, A).
 }

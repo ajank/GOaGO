@@ -41,12 +41,12 @@ setClass("GOaGO-result",
 ##' Extract unique gene pairs from the data frame provided.
 ##'
 ##' Given a data frame of gene pairs, this function will return the unique
-##  pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
-##  is a duplicate of (B, A).
+##' pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
+##' is a duplicate of (B, A).
 ##'
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
 ##'   containing gene identifiers; column \code{pairID} will also be used if
-##    provided.
+##'   provided.
 
 uniqueGenePairs <- function(genePairs) {
     # ensure that gene identifiers are provided in the input data
@@ -97,7 +97,7 @@ uniqueGenePairs <- function(genePairs) {
 ##'
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
 ##'   containing gene identifiers; column \code{pairID} will also be used if
-##    provided.
+##'   provided.
 ##' @param OrgDb OrgDb
 ##' @param keyType keytype of input gene
 ##' @param ont One of "BP", "MF", and "CC" subontologies, or "ALL" for all
