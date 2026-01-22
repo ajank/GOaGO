@@ -6,19 +6,19 @@
 ##' Transcription Start Site (TSS) at both loop anchors. As some loop anchors
 ##' overlapped TSSes of multiple genes, the dataset contains all gene
 ##' combinations for these loops, yielding a total of 811 GM12878-specific gene
-##' pairs, of which 775 are unique.
+##' pairs, of which 775 pairs are unique.
 ##'
 ##' @name genePairsGM12878Specific
 ##' @format A data frame with 811 rows and 15 columns:
 ##' \describe{
 ##'   \item{loopID}{Loop identifier}
-##'   \item{chromi}{Chromosome of loop anchor}
-##'   \item{starti}{Start coordinate of loop anchor}
-##'   \item{endi}{End coordinate of loop anchor}
-##'   \item{centroidi}{Centroid of loop anchor}
-##'   \item{distance_to_TSSi}{Distance between the anchor and the closest TSS of the associated gene}
-##'   \item{geneID1}{ENTREZ identifier of the associated gene}
-##'   \item{loop_distance}{Distance between loop centroids}
+##'   \item{chrom\code{i}}{Chromosome of loop anchor}
+##'   \item{start\code{i}}{Start coordinate of loop anchor}
+##'   \item{end\code{i}}{End coordinate of loop anchor}
+##'   \item{centroid\code{i}}{Centroid of loop anchor}
+##'   \item{distance_to_TSS\code{i}}{Distance between the loop anchor and the closest TSS of the associated gene}
+##'   \item{geneID\code{i}}{Entrez identifier of the associated gene}
+##'   \item{loop_distance}{Distance between anchor centroids}
 ##'   \item{pairID}{Gene pair identifier}
 ##' }
 ##' where \code{i} is 1 or 2 for loop anchor 1 and 2, respectively.

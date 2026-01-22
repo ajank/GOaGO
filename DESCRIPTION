@@ -17,5 +17,5 @@ Depends:
 biocViews: GO, GeneSetEnrichment
 URL: https://github.com/ajank/GOaGO
 BugReports: https://github.com/ajank/GOaGO/issues
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 LazyData: true
