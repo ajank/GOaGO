@@ -100,12 +100,12 @@ head(goago@result)
 #> 5                                                      protein-DNA complex assembly
 #> 6 antigen processing and presentation of exogenous peptide antigen via MHC class II
 #>   Count       Ratio      BgRatio pvalue p.adjust qvalue
-#> 1     8 0.010322581 2.807742e-04      0        0      0
-#> 2     8 0.010322581 2.061935e-04      0        0      0
-#> 3     6 0.007741935 7.201290e-04      0        0      0
-#> 4     8 0.010322581 5.343226e-04      0        0      0
-#> 5     8 0.010322581 4.640000e-04      0        0      0
-#> 6     2 0.002580645 1.987097e-05      0        0      0
+#> 1     8 0.010322581 0.0002703226      0        0      0
+#> 2     8 0.010322581 0.0001983226      0        0      0
+#> 3     6 0.007741935 0.0007245161      0        0      0
+#> 4     8 0.010322581 0.0005188387      0        0      0
+#> 5     8 0.010322581 0.0004468387      0        0      0
+#> 6     2 0.002580645 0.0000196129      0        0      0
 ```
 
 Note that some of the *p*-values have the value of zero, which means
@@ -134,7 +134,7 @@ distributions, empirical *p*-values were calculated:
 
 ``` r
 RidgePlot(goago)
-#> Picking joint bandwidth of 0.08
+#> Picking joint bandwidth of 0.0797
 ```
 
 <img src="man/figures/README-ridgeplot-1.png" width="100%" />
