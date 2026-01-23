@@ -32,6 +32,7 @@ dataset:
 library(GOaGO)
 #> 
 
+data("genePairsGM12878Specific")
 tail(genePairsGM12878Specific)
 #>    loopID chrom1   start1     end1 centroid1 distance_to_TSS1 geneID1 chrom2
 #>     <int> <char>    <int>    <int>     <int>            <int>   <int> <char>
@@ -60,11 +61,12 @@ multiple genes, the dataset contains all gene combinations for these
 loops.
 
 When running GO-a-GO, we should specify that gene identifiers are from
-the ENTREZ database, and use the Bioconductor `org.Hs.eg.db` package as
+the Entrez database, and use the Bioconductor `org.Hs.eg.db` package as
 the source of Gene Ontology annotations for human genes, taking all
 three subontologies (Biological Process, Molecular Function, and
-Cellular Component). We will run 10,000 permutations, and use the
-default *p*-value cutoff of 0.05 with Benjamini-Hochberg correction:
+Cellular Component). We will run the default 10,000 permutations, and
+also use the default *p*-value cutoff of 0.05 with Benjamini-Hochberg
+correction:
 
 ``` r
 library(org.Hs.eg.db)
@@ -73,8 +75,9 @@ library(org.Hs.eg.db)
 library(BiocParallel)
 options(MulticoreParam = MulticoreParam(workers = 2))
 
-goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
-               OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)
+goago <- GOaGO(genePairsGM12878Specific,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL"
+)
 #> Warning in uniqueGenePairs(genePairs): removing 6 duplicated gene pair(s)
 #> Warning in uniqueGenePairs(genePairs): removing 30 gene pair(s) containing the
 #> same gene twice
