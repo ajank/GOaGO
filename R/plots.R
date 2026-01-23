@@ -54,7 +54,7 @@ RidgePlot <- function(goago, minTermPairs = 5) {
         geom_density_ridges() +
         geom_point(data = dt, aes(color = p.adjust < 0.05)) +
         scale_color_manual(NULL, values = c(`TRUE` = "#e41a1c", `FALSE` = "#666666"),
-                           labels = c(`TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term", `FALSE` = "not significant")) +
+            labels = c(`TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term", `FALSE` = "not significant")) +
         xlab("Number of randomized gene pairs\nsharing a Gene Ontology term") +
         ylab(NULL) +
         guides(color=guide_legend(ncol=1)) +

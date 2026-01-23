@@ -198,7 +198,7 @@ GOaGO <- function(genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     # now do the permutation test: for each permutation, count permuted gene pairs sharing each GO term
     countPermutedGenePairsPerTerm <- function(i)
     {
-        result <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix_reduced, permuted = T)
+        result <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix_reduced, permuted = TRUE)
         return(result)
     }
     # store the resulting counts in term x permutation matrix
