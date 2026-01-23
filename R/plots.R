@@ -3,7 +3,7 @@
 sortedResult <- function(goago) {
     dt <- as.data.table(goago@result)
     dt[, label := Description]
-    dt <- dt[order(Ratio/BgRatio), ]
+    dt <- dt[order(Ratio / BgRatio), ]
     dt[, label := factor(label, unique(label))]
 }
 
@@ -24,10 +24,10 @@ DotPlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
     dt <- dt[Count >= minTermPairs, ]
 
-    p <- ggplot(dt, aes(x=log2(Ratio/BgRatio), y=label, size=Count, color=p.adjust)) +
+    p <- ggplot(dt, aes(x = log2(Ratio / BgRatio), y = label, size = Count, color = p.adjust)) +
         geom_point() +
         ylab(NULL) +
-        scale_size(range=c(3, 8))
+        scale_size(range = c(3, 8))
     return(p)
 }
 
@@ -53,12 +53,14 @@ RidgePlot <- function(goago, minTermPairs = 5) {
     p <- ggplot(dt2, aes(x = Count, y = label)) +
         geom_density_ridges() +
         geom_point(data = dt, aes(color = p.adjust < 0.05)) +
-        scale_color_manual(NULL, values = c(`TRUE` = "#e41a1c", `FALSE` = "#666666"),
-            labels = c(`TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term", `FALSE` = "not significant")) +
+        scale_color_manual(NULL,
+            values = c(`TRUE` = "#e41a1c", `FALSE` = "#666666"),
+            labels = c(`TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term", `FALSE` = "not significant")
+        ) +
         xlab("Number of randomized gene pairs\nsharing a Gene Ontology term") +
         ylab(NULL) +
-        guides(color=guide_legend(ncol=1)) +
-        theme(legend.position="bottom") +
+        guides(color = guide_legend(ncol = 1)) +
+        theme(legend.position = "bottom") +
         NULL
     return(p)
 }

@@ -71,7 +71,7 @@ library(org.Hs.eg.db)
 
 # set the number of CPU threads to use
 library(BiocParallel)
-options(MulticoreParam=MulticoreParam(workers=2))
+options(MulticoreParam = MulticoreParam(workers = 2))
 
 goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
                OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)

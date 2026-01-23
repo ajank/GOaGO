@@ -6,12 +6,12 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  dev = "png",
-  dev.args = list(png = list(type = "cairo")),
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+    collapse = TRUE,
+    comment = "#>",
+    dev = "png",
+    dev.args = list(png = list(type = "cairo")),
+    fig.path = "man/figures/README-",
+    out.width = "100%"
 )
 ```
 
@@ -64,10 +64,12 @@ library(org.Hs.eg.db)
 
 # set the number of CPU threads to use
 library(BiocParallel)
-options(MulticoreParam=MulticoreParam(workers=2))
+options(MulticoreParam = MulticoreParam(workers = 2))
 
-goago <- GOaGO(genePairsGM12878Specific, keyType = "ENTREZID",
-               OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L)
+goago <- GOaGO(genePairsGM12878Specific,
+    keyType = "ENTREZID",
+    OrgDb = org.Hs.eg.db, ont = "ALL", numPermutations = 10000L
+)
 ```
 
 We can inspect the overrepresented GO terms:
