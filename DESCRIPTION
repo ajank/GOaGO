@@ -26,3 +26,8 @@ biocViews: GO, GeneSetEnrichment
 URL: https://github.com/ajank/GOaGO
 BugReports: https://github.com/ajank/GOaGO/issues
 RoxygenNote: 7.3.3
+Suggests:
+    AnnotationDbi,
+    org.Hs.eg.db,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
