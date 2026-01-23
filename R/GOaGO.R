@@ -44,12 +44,14 @@ setClass("GOaGO-result",
 ##' Extract unique gene pairs from the data frame provided.
 ##'
 ##' Given a data frame of gene pairs, this function will return the unique
-##' pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
-##' is a duplicate of (B, A).
+##' pairs of genes, removing loops (gene pairs containing the same gene twice)
+##' and duplicates. Note that gene pair (A, B) is a duplicate of (B, A).
 ##'
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
 ##'   containing gene identifiers; column \code{pairID} will also be used if
 ##'   provided.
+##' @returns A data frame. If loops or duplicates were removed, a warning will
+##'   alert you.
 
 uniqueGenePairs <- function(genePairs) {
     # ensure that gene identifiers are provided in the input data

@@ -8,8 +8,8 @@
 ##' combinations for these loops, yielding a total of 811 GM12878-specific gene
 ##' pairs, of which 775 pairs are unique.
 ##'
-##' @name genePairsGM12878Specific
-##' @format A data frame with 811 rows and 14 columns:
+##' @format ## `genePairsGM12878Specific`
+##' A data frame with 811 rows and 14 columns:
 ##' \describe{
 ##'   \item{loopID}{Loop identifier}
 ##'   \item{chrom1}{Chromosome of loop anchor 1}
@@ -27,4 +27,4 @@
 ##'   \item{loop_distance}{Genomic distance between the anchor centroids.}
 ##' }
 ##' @source <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525>
-NULL
+"genePairsGM12878Specific"

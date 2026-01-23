@@ -11,8 +11,12 @@ uniqueGenePairs(genePairs)
 containing gene identifiers; column \code{pairID} will also be used if
 provided.}
 }
+\value{
+A data frame. If loops or duplicates were removed, a warning will
+  alert you.
+}
 \description{
 Given a data frame of gene pairs, this function will return the unique
-pairs of genes, removing duplicates and loops. Note that gene pair (A, B)
-is a duplicate of (B, A).
+pairs of genes, removing loops (gene pairs containing the same gene twice)
+and duplicates. Note that gene pair (A, B) is a duplicate of (B, A).
 }
