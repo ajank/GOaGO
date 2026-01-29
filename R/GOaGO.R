@@ -109,9 +109,8 @@ uniqueGenePairs <- function(genePairs) {
 ##'   containing gene identifiers; column \code{pairID} will also be used if
 ##'   provided.
 ##' @param OrgDb OrgDb
-##' @param keyType keytype of input gene
-##' @param ont One of "BP", "MF", and "CC" subontologies, or "ALL" for all
-##'   three.
+##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
+##' @param ont one of "BP", "MF", and "CC" subontologies, or "ALL" for all three
 ##' @param minTermPairs cutoff for number of pairs that share a GO term for this
 ##'   term to be considered
 ##' @param numPermutations number of permutations performed in the enrichment
@@ -127,7 +126,7 @@ uniqueGenePairs <- function(genePairs) {
 ##'   \code{qvalueCutoff} on q-values to be reported.
 ##' @param minGSSize minimal size of genes annotated for testing
 ##' @param maxGSSize maximal size of genes annotated for testing
-##' @returns A \code{GOaGO} instance.
+##' @returns A \code{GOaGO-result} instance.
 ##' @seealso \code{\link{GOaGO-result-class}}
 ##' @export
 

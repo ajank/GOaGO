@@ -26,10 +26,9 @@ provided.}
 
 \item{OrgDb}{OrgDb}
 
-\item{keyType}{keytype of input gene}
+\item{keyType}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL"}
 
-\item{ont}{One of "BP", "MF", and "CC" subontologies, or "ALL" for all
-three.}
+\item{ont}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all three}
 
 \item{minTermPairs}{cutoff for number of pairs that share a GO term for this
 term to be considered}
@@ -55,7 +54,7 @@ p-values, (ii) \code{pvalueCutoff} on adjusted p-values, and (iii)
 \item{maxGSSize}{maximal size of genes annotated for testing}
 }
 \value{
-A \code{GOaGO} instance.
+A \code{GOaGO-result} instance.
 }
 \description{
 Given a data frame of gene pairs, this function will return the enriched

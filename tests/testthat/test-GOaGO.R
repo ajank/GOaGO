@@ -37,7 +37,7 @@ are found in the `genePairs` argument", {
 #' @param term2 GO term 2
 #' @param num_term1_pairs number of pairs between genes having \code{term1}
 #' @param num_term2_pairs number of pairs between genes having \code{term2}
-#' @param keyType keytype of genes to use, such as "ENTREZID" or "ENSEMBL"
+#' @param keyType type of gene identifiers to use, such as "ENTREZID" or "ENSEMBL"
 #'
 #' @returns A data frame with columns \code{geneID1} and \code{geneID2}.
 simulate_gene_pairs <- function(
