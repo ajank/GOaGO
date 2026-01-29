@@ -1,11 +1,11 @@
 export("GOaGO")
+export("keyType")
 export("DotPlot")
 export("RidgePlot")
 
 exportClasses("GOaGO-result")
 exportMethods("as.data.frame")
 exportMethods("as.data.table")
-exportMethods("keyType")
 exportMethods("organism")
 exportMethods("show")
 

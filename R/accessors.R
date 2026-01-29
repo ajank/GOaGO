@@ -30,16 +30,9 @@ setMethod(
 
 ## Accessors
 
-setGeneric("keyType", function(object) {
-    standardGeneric("keyType")
-})
-
-setMethod(
-    "keyType", signature(object = "GOaGO-result"),
-    function(object) {
-        object@keyType
-    }
-)
+keyType <- function(object) {
+    object@keyType
+}
 
 # defined in package BiocGenerics
 setMethod(
