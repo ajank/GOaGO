@@ -1,7 +1,7 @@
 # sort by enrichment ratio, and impose the same ordering on the label levels
 
 sortedResult <- function(goago) {
-    dt <- as.data.table(goago@result)
+    dt <- as.data.table(goago)
     dt[, label := Description]
     dt <- dt[order(Ratio / BgRatio), ]
     dt[, label := factor(label, unique(label))]

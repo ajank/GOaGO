@@ -164,7 +164,7 @@ GOaGO <- function(
         ont = ont, pAdjustMethod = "none", pvalueCutoff = Inf,
         qvalueCutoff = Inf, minGSSize = minGSSize, maxGSSize = maxGSSize
     )
-    egoResult <- as.data.table(ego@result)
+    egoResult <- as.data.table(ego)
 
     # GO term universe
     ID_universe <- egoResult$ID
