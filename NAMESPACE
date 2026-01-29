@@ -12,8 +12,10 @@ exportMethods("show")
 importFrom("BiocGenerics", "organism")
 importFrom("BiocParallel", "bplapply")
 importFrom("clusterProfiler", "enrichGO")
-importFrom("data.table", ":=", "as.data.table", "data.table", "dcast", "setnafill")
-importFrom("ggplot2", "aes", "geom_point", "ggplot", "guide_legend", "guides", "scale_color_manual", "scale_size", "theme", "xlab", "ylab")
+importFrom("data.table", ":=", "as.data.table", "data.table", "dcast",
+    "setnafill")
+importFrom("ggplot2", "aes", "geom_point", "ggplot", "guide_legend", "guides",
+    "scale_color_manual", "scale_size", "theme", "xlab", "ylab")
 importFrom("ggridges", "geom_density_ridges")
 importFrom("Matrix", "Matrix", "colSums", "which")
 importFrom("methods", "new", "show")

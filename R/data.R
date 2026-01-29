@@ -16,13 +16,15 @@
 ##'   \item{start1}{Start coordinate of loop anchor 1}
 ##'   \item{end1}{End coordinate of loop anchor 1}
 ##'   \item{centroid1}{Centroid of loop anchor 1}
-##'   \item{distance_to_TSS1}{Distance between loop anchor 1 and the closest TSS of the associated gene}
+##'   \item{distance_to_TSS1}{Distance between loop anchor 1 and the closest TSS
+##'     of the associated gene}
 ##'   \item{geneID1}{Entrez identifier of the gene associated to loop anchor 1}
 ##'   \item{chrom2}{Chromosome of loop anchor 2}
 ##'   \item{start2}{Start coordinate of loop anchor 2}
 ##'   \item{end2}{End coordinate of loop anchor 2}
 ##'   \item{centroid2}{Centroid of loop anchor 2}
-##'   \item{distance_to_TSS2}{Distance between loop anchor 2 and the closest TSS of the associated gene}
+##'   \item{distance_to_TSS2}{Distance between loop anchor 2 and the closest TSS
+##'     of the associated gene}
 ##'   \item{geneID2}{Entrez identifier of the gene associated to loop anchor 2}
 ##'   \item{loop_distance}{Genomic distance between the anchor centroids.}
 ##' }

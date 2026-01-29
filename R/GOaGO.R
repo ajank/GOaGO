@@ -16,7 +16,8 @@
 ##' @slot minGSSize minimal size of genes annotated for testing
 ##' @slot maxGSSize maximal size of genes annotated for testing
 ##' @slot organism scientific name of the genus and species
-##' @slot ontology one of "BP", "MF", and "CC" subontologies, or "ALL" for all three
+##' @slot ontology one of "BP", "MF", and "CC" subontologies, or "ALL" for all
+##'   three
 ##' @slot keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
 ##' @slot genePairs A data frame with the input gene pairs, with the columns
 ##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
@@ -89,7 +90,10 @@ uniqueGenePairs <- function(genePairs) {
     n <- nrow(genePairs)
     genePairs <- genePairs[geneID1 != geneID2, ]
     if (nrow(genePairs) != n) {
-        warning("removing ", n - nrow(genePairs), " gene pair(s) containing the same gene twice")
+        warning(
+            "removing ", n - nrow(genePairs),
+            " gene pair(s) containing the same gene twice"
+        )
     }
 
     if (!pairID_provided) {
@@ -131,16 +135,17 @@ uniqueGenePairs <- function(genePairs) {
 ##' @export
 
 GOaGO <- function(
-      genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
-      minTermPairs = 1, numPermutations = 10000, universe,
-      pvalueCutoff = 0.05, pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
+    genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
+    minTermPairs = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,
+    pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
 ) {
     # extract unique gene pairs from the data frame provided
     genePairs <- uniqueGenePairs(genePairs)
 
     # gene universe
     if (missing(universe)) {
-        # if not explicitly provided, universe is constituted by all the genes from all the gene pairs
+        # if not explicitly provided, universe is constituted by all the genes
+        # from all the gene pairs
         universe <- unique(c(genePairs$geneID1, genePairs$geneID2))
     } else {
         # check if all the genes are within the universe
@@ -149,32 +154,49 @@ GOaGO <- function(
         # remove duplicates in the universe
         universe <- unique(universe)
     }
-    # should be a character (not integer) vector, as it will be used as factor levels
+    # the universe should be a character (not integer) vector, as it will be
+    # used as factor levels
     universe <- as.character(universe)
 
     # use enrichGO to fetch the information on gene-to-term associations
-    ego <- enrichGO(gene = universe, OrgDb = OrgDb, keyType = keyType, ont = ont, pAdjustMethod = "none", pvalueCutoff = Inf, qvalueCutoff = Inf, minGSSize = minGSSize, maxGSSize = maxGSSize)
+    ego <- enrichGO(
+        gene = universe, OrgDb = OrgDb, keyType = keyType,
+        ont = ont, pAdjustMethod = "none", pvalueCutoff = Inf,
+        qvalueCutoff = Inf, minGSSize = minGSSize, maxGSSize = maxGSSize
+    )
     egoResult <- as.data.table(ego@result)
 
     # GO term universe
     ID_universe <- egoResult$ID
     stopifnot(!anyDuplicated(ID_universe))
     # take only the relevant columns
-    go_split <- egoResult[, list(geneID = factor(strsplit(geneID, "/")[[1]], universe)),
-        by = list(ID = factor(ID, ID_universe)), showProgress = FALSE
+    go_split <- egoResult[,
+        list(geneID = factor(strsplit(geneID, "/")[[1]], universe)),
+        by = list(ID = factor(ID, ID_universe)),
+        showProgress = FALSE
     ]
     stopifnot(as.integer(go_split$geneID) == match(go_split$geneID, universe))
     stopifnot(!is.na(go_split$ID))
 
     # matrix (not a data frame) defining the gene pairs
-    genePairsMatrix <- cbind(factor(genePairs$geneID1, universe), factor(genePairs$geneID2, universe))
+    genePairsMatrix <- cbind(
+        factor(genePairs$geneID1, universe),
+        factor(genePairs$geneID2, universe)
+    )
 
     # construct sparse gene x term matrix
-    geneTermMatrix <- Matrix(FALSE, nrow = length(universe), ncol = length(ID_universe), sparse = TRUE, doDiag = FALSE)
-    geneTermMatrix[cbind(as.integer(go_split$geneID), as.integer(go_split$ID))] <- TRUE
+    geneTermMatrix <- Matrix(FALSE,
+        nrow = length(universe),
+        ncol = length(ID_universe), sparse = TRUE, doDiag = FALSE
+    )
+    ind <- cbind(as.integer(go_split$geneID), as.integer(go_split$ID))
+    geneTermMatrix[ind] <- TRUE
 
     # a function useful for permutation testing
-    countGenePairsPerTerm <- function(genePairsMatrix, geneTermMatrix, permuted = FALSE) {
+    countGenePairsPerTerm <- function(genePairsMatrix,
+        geneTermMatrix,
+        permuted = FALSE
+    ) {
         if (permuted) {
             permuted_genes <- sample.int(length(universe))
             gene1 <- permuted_genes[genePairsMatrix[, 1]]
@@ -184,30 +206,37 @@ GOaGO <- function(
             gene2 <- genePairsMatrix[, 2]
         }
 
-        bw <- geneTermMatrix[gene1, , drop = FALSE] & geneTermMatrix[gene2, , drop = FALSE]
+        bw <- geneTermMatrix[gene1, , drop = FALSE] &
+            geneTermMatrix[gene2, , drop = FALSE]
         result <- as.integer(colSums(bw))
         return(result)
     }
 
-    # simplified version of the above, without permutations and per-term aggregation
+    # simplified version of the above, without permutations and per-term
+    # aggregation
     pairTermsMatrix <- function(genePairsMatrix, geneTermMatrix) {
         gene1 <- genePairsMatrix[, 1]
         gene2 <- genePairsMatrix[, 2]
-        bw <- geneTermMatrix[gene1, , drop = FALSE] & geneTermMatrix[gene2, , drop = FALSE]
+        bw <- geneTermMatrix[gene1, , drop = FALSE] &
+            geneTermMatrix[gene2, , drop = FALSE]
         return(bw)
     }
 
     pairCountsPerTerm <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix)
 
-    # take only the GO terms that are associated to at least minTermPairs gene pairs
+    # take only the GO terms that are associated to at least minTermPairs gene
+    # pairs
     sel <- which(pairCountsPerTerm >= minTermPairs)
     ID_universe_reduced <- ID_universe[sel]
     pairCountsPerTerm_reduced <- pairCountsPerTerm[sel]
     geneTermMatrix_reduced <- geneTermMatrix[, sel, drop = FALSE]
 
-    # now do the permutation test: for each permutation, count permuted gene pairs sharing each GO term
+    # now do the permutation test: for each permutation, count permuted gene
+    # pairs sharing each GO term
     countPermutedGenePairsPerTerm <- function(i) {
-        result <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix_reduced, permuted = TRUE)
+        result <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix_reduced,
+            permuted = TRUE
+        )
         return(result)
     }
     # store the resulting counts in term x permutation matrix
@@ -222,39 +251,50 @@ GOaGO <- function(
         egoResult[sel, ..cols],
         Count = pairCountsPerTerm_reduced,
         Ratio = pairCountsPerTerm_reduced / nrow(genePairsMatrix),
-        BgRatio = rowMeans(permutedPairCountsPerTerm_reduced) / nrow(genePairsMatrix),
-        pvalue = rowMeans(permutedPairCountsPerTerm_reduced >= pairCountsPerTerm_reduced)
+        BgRatio = rowMeans(permutedPairCountsPerTerm_reduced) /
+            nrow(genePairsMatrix),
+        pvalue = rowMeans(permutedPairCountsPerTerm_reduced >=
+            pairCountsPerTerm_reduced)
     )
 
     # adjust p-values and estimate q-values
     result[, p.adjust := p.adjust(pvalue, method = pAdjustMethod)]
-    qobj <- tryCatch(qvalue(p = result$pvalue, lambda = 0.05, pi0.method = "bootstrap"),
-        error = function(e) NULL
-    )
+    qobj <- tryCatch(qvalue(
+        p = result$pvalue, lambda = 0.05,
+        pi0.method = "bootstrap"
+    ), error = function(e) NULL)
     if (inherits(qobj, "qvalue")) {
         result[, qvalue := qobj$qvalues]
-        sel_signif <- which(result$pvalue < pvalueCutoff & result$p.adjust <= pvalueCutoff & result$qvalue <= qvalueCutoff)
+        sel_signif <- which(result$pvalue < pvalueCutoff &
+            result$p.adjust <= pvalueCutoff & result$qvalue <= qvalueCutoff)
     } else {
         result[, qvalue := NA]
-        sel_signif <- which(result$pvalue < pvalueCutoff & result$p.adjust <= pvalueCutoff)
+        sel_signif <- which(result$pvalue < pvalueCutoff &
+            result$p.adjust <= pvalueCutoff)
     }
 
     # take only the GO terms that are significantly overrepresented
     result <- result[sel_signif, ]
     ID_universe_reduced_signif <- ID_universe_reduced[sel_signif]
-    geneTermMatrix_reduced_signif <- geneTermMatrix_reduced[, sel_signif, drop = FALSE]
-    permutedPairCountsPerTerm_reduced_signif <- permutedPairCountsPerTerm_reduced[sel_signif, , drop = FALSE]
+    geneTermMatrix_reduced_signif <- geneTermMatrix_reduced[, sel_signif,
+        drop = FALSE
+    ]
+    permutedPairCountsPerTerm_reduced_signif <-
+        permutedPairCountsPerTerm_reduced[sel_signif, , drop = FALSE]
 
     # construct sparse pair x term matrix, convert it to tidy format
-    pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif), arr.ind = TRUE)
+    pt <- which(pairTermsMatrix(genePairsMatrix, geneTermMatrix_reduced_signif),
+        arr.ind = TRUE
+    )
     pairTerms <- data.table(
         pairID = genePairs$pairID[pt[, 1]],
         ID = factor(ID_universe_reduced_signif)[pt[, 2]]
     )
 
     # convert the results of the permutations to tidy format
+    ind <- as.vector(row(permutedPairCountsPerTerm_reduced_signif))
     permutedResult <- data.table(
-        ID = factor(ID_universe_reduced_signif)[as.vector(row(permutedPairCountsPerTerm_reduced_signif))],
+        ID = factor(ID_universe_reduced_signif)[ind],
         Count = as.vector(permutedPairCountsPerTerm_reduced_signif)
     )
 

@@ -35,7 +35,8 @@ test}
 
 \item{\code{organism}}{scientific name of the genus and species}
 
-\item{\code{ontology}}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all three}
+\item{\code{ontology}}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all
+three}
 
 \item{\code{keyType}}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL"}
 

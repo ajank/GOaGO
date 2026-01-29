@@ -24,7 +24,10 @@ DotPlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
     dt <- dt[Count >= minTermPairs, ]
 
-    p <- ggplot(dt, aes(x = log2(Ratio / BgRatio), y = label, size = Count, color = p.adjust)) +
+    p <- ggplot(dt, aes(
+        x = log2(Ratio / BgRatio),
+        y = label, size = Count, color = p.adjust
+    )) +
         geom_point() +
         ylab(NULL) +
         scale_size(range = c(3, 8))
@@ -50,12 +53,16 @@ RidgePlot <- function(goago, minTermPairs = 5) {
 
     dt2 <- merge(dt[, c("ID", "label")], goago@permutedResult, by = "ID")
 
+    lab <- c(
+        `TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term",
+        `FALSE` = "not significant"
+    )
     p <- ggplot(dt2, aes(x = Count, y = label)) +
         geom_density_ridges() +
         geom_point(data = dt, aes(color = p.adjust < 0.05)) +
         scale_color_manual(NULL,
             values = c(`TRUE` = "#e41a1c", `FALSE` = "#666666"),
-            labels = c(`TRUE` = "Number of actual gene pairs\nsharing a Gene Ontology term", `FALSE` = "not significant")
+            labels = lab
         ) +
         xlab("Number of randomized gene pairs\nsharing a Gene Ontology term") +
         ylab(NULL) +
