@@ -10,7 +10,7 @@ GOaGO(
   keyType = "ENTREZID",
   ont = "MF",
   minTermPairs = 1,
-  numPermutations = 10000L,
+  numPermutations = 10000,
   universe,
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
