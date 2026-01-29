@@ -9,7 +9,7 @@ exportMethods("keyType")
 exportMethods("organism")
 exportMethods("show")
 
-importFrom("BiocGenerics", "organism")
+importFrom("BiocGenerics", "as.data.frame", "organism")
 importFrom("BiocParallel", "bplapply")
 importFrom("clusterProfiler", "enrichGO")
 importFrom("data.table", ":=", "as.data.table", "data.table", "dcast",
