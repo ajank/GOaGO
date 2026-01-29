@@ -1,12 +1,33 @@
 ## Show method for objects
 
+##' show method for \code{GOaGO-result} instance
+##'
+##' @name show
+##' @aliases show,GOaGO-result-method
+##' @docType methods
+##' @rdname show-methods
+##'
+##' @title show method
+##' @usage show(object)
+##' @param object A \code{GOaGO-result} instance.
+##' @returns message
+##' @examples
+##' library(org.Hs.eg.db)
+##' library("GOaGO")
+##' data("genePairsGM12878Specific")
+##'
+##' goago <- GOaGO(genePairsGM12878Specific,
+##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+##' )
+##'
+##' show(goago)
 setMethod(
     "show", signature(object = "GOaGO-result"),
     function(object) {
         cat("#\n")
         cat("# Gene Ontology over-representation test in a set of gene pairs\n")
-        cat("#\n")
 
+        cat("#\n")
         cat("#...@organism", "\t", object@organism, "\n")
         cat("#...@ontology", "\t", object@ontology, "\n")
         cat("#...@keyType", "\t", object@keyType, "\n")

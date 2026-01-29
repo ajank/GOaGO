@@ -1,6 +1,6 @@
 ##' An S4 class to represent the results of GO-a-GO enrichment analysis.
 ##'
-##' @slot result A data frame of the enriched Gene Ontology categories, with the
+##' @slot result A data frame of the enriched Gene Ontology terms, with the
 ##'   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 ##'   the GO term), \code{Count} (number of input gene pairs sharing the given
 ##'   term), \code{Ratio} (fraction of input gene pairs sharing the given term),
@@ -15,21 +15,20 @@
 ##'   test
 ##' @slot minGSSize minimal size of genes annotated for testing
 ##' @slot maxGSSize maximal size of genes annotated for testing
-##' @slot organism scientific name of the genus and species
+##' @slot organism scientific name of the organism
 ##' @slot ontology one of "BP", "MF", and "CC" subontologies, or "ALL" for all
 ##'   three
 ##' @slot keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
 ##' @slot genePairs A data frame with the input gene pairs, with the columns
 ##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
-##' @slot pairTerms A data frame linking the enriched Gene Ontology categories
-##'   with the input gene pairs, with the columns \code{pairID} and \code{ID}
-##'   (of the GO term).
+##' @slot pairTerms A data frame linking the enriched Gene Ontology terms with
+##'   the input gene pairs, with the columns \code{pairID} and \code{ID} (of the
+##'   GO term).
 ##' @slot permutedResult A data frame with the columns \code{ID} (of the GO
 ##'   term) and \code{Count}, keeping the numbers of permuted gene pairs sharing
 ##'   the term as obtained in every random permutation.
 ##' @slot universe a set of background genes
 ##' @export
-
 setClass("GOaGO-result",
     slots = c(
         result          = "data.frame",
@@ -62,7 +61,6 @@ setClass("GOaGO-result",
 ##'   provided.
 ##' @returns A data frame. If loops or duplicates were removed, a warning will
 ##'   alert you.
-
 uniqueGenePairs <- function(genePairs) {
     # ensure that gene identifiers are provided in the input data
     stopifnot("geneID1" %in% colnames(genePairs))
@@ -107,7 +105,7 @@ uniqueGenePairs <- function(genePairs) {
 ##' Gene Ontology enrichment analysis in a set of gene pairs.
 ##'
 ##' Given a data frame of gene pairs, this function will return the enriched
-##' Gene Ontology categories after FDR control.
+##' Gene Ontology terms after FDR control.
 ##'
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
 ##'   containing gene identifiers; column \code{pairID} will also be used if
@@ -133,7 +131,16 @@ uniqueGenePairs <- function(genePairs) {
 ##' @returns A \code{GOaGO-result} instance.
 ##' @seealso \code{\link{GOaGO-result-class}}
 ##' @export
-
+##' @examples
+##' library(org.Hs.eg.db)
+##' library("GOaGO")
+##' data("genePairsGM12878Specific")
+##'
+##' goago <- GOaGO(genePairsGM12878Specific,
+##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+##' )
+##'
+##' show(goago)
 GOaGO <- function(
     genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
     minTermPairs = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,

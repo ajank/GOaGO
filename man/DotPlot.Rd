@@ -20,3 +20,14 @@ A ggplot object that can be further customized using the
 The x-axis shows the log~2~ fold change of the fraction of gene pairs
 sharing the given terms. Color indicates the adjusted p-value.
 }
+\examples{
+library(org.Hs.eg.db)
+library("GOaGO")
+data("genePairsGM12878Specific")
+
+goago <- GOaGO(genePairsGM12878Specific,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+)
+
+DotPlot(goago)
+}

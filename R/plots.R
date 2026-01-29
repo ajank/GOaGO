@@ -19,7 +19,16 @@ sortedResult <- function(goago) {
 ##' @returns A ggplot object that can be further customized using the
 ##'   \code{ggplot2} package.
 ##' @export
-
+##' @examples
+##' library(org.Hs.eg.db)
+##' library("GOaGO")
+##' data("genePairsGM12878Specific")
+##'
+##' goago <- GOaGO(genePairsGM12878Specific,
+##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+##' )
+##'
+##' DotPlot(goago)
 DotPlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
     dt <- dt[Count >= minTermPairs, ]
@@ -46,7 +55,16 @@ DotPlot <- function(goago, minTermPairs = 5) {
 ##' @returns A ggplot object that can be further customized using the
 ##'   \code{ggplot2} package.
 ##' @export
-
+##' @examples
+##' library(org.Hs.eg.db)
+##' library("GOaGO")
+##' data("genePairsGM12878Specific")
+##'
+##' goago <- GOaGO(genePairsGM12878Specific,
+##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+##' )
+##'
+##' RidgePlot(goago)
 RidgePlot <- function(goago, minTermPairs = 5) {
     dt <- sortedResult(goago)
     dt <- dt[Count >= minTermPairs, ]

@@ -10,7 +10,7 @@ An S4 class to represent the results of GO-a-GO enrichment analysis.
 \section{Slots}{
 
 \describe{
-\item{\code{result}}{A data frame of the enriched Gene Ontology categories, with the
+\item{\code{result}}{A data frame of the enriched Gene Ontology terms, with the
 following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 the GO term), \code{Count} (number of input gene pairs sharing the given
 term), \code{Ratio} (fraction of input gene pairs sharing the given term),
@@ -33,7 +33,7 @@ test}
 
 \item{\code{maxGSSize}}{maximal size of genes annotated for testing}
 
-\item{\code{organism}}{scientific name of the genus and species}
+\item{\code{organism}}{scientific name of the organism}
 
 \item{\code{ontology}}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all
 three}
@@ -43,9 +43,9 @@ three}
 \item{\code{genePairs}}{A data frame with the input gene pairs, with the columns
 \code{geneID1}, \code{geneID2} and \code{pairID}.}
 
-\item{\code{pairTerms}}{A data frame linking the enriched Gene Ontology categories
-with the input gene pairs, with the columns \code{pairID} and \code{ID}
-(of the GO term).}
+\item{\code{pairTerms}}{A data frame linking the enriched Gene Ontology terms with
+the input gene pairs, with the columns \code{pairID} and \code{ID} (of the
+GO term).}
 
 \item{\code{permutedResult}}{A data frame with the columns \code{ID} (of the GO
 term) and \code{Count}, keeping the numbers of permuted gene pairs sharing

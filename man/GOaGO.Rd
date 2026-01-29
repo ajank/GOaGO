@@ -58,7 +58,18 @@ A \code{GOaGO-result} instance.
 }
 \description{
 Given a data frame of gene pairs, this function will return the enriched
-Gene Ontology categories after FDR control.
+Gene Ontology terms after FDR control.
+}
+\examples{
+library(org.Hs.eg.db)
+library("GOaGO")
+data("genePairsGM12878Specific")
+
+goago <- GOaGO(genePairsGM12878Specific,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+)
+
+show(goago)
 }
 \seealso{
 \code{\link{GOaGO-result-class}}

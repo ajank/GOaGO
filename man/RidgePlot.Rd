@@ -20,3 +20,14 @@ A ggplot object that can be further customized using the
 Ridgeplot of the sampling distributions of numbers of gene pairs sharing
 each Gene Ontology term, obtained for the randomized gene pairs.
 }
+\examples{
+library(org.Hs.eg.db)
+library("GOaGO")
+data("genePairsGM12878Specific")
+
+goago <- GOaGO(genePairsGM12878Specific,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db
+)
+
+RidgePlot(goago)
+}
