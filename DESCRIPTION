@@ -12,6 +12,7 @@ Description: GO-a-GO annotates functional terms that are overrepresented in a
 License: GPL (>= 3)
 Encoding: UTF-8
 Imports:
+    BiocGenerics,
     BiocParallel,
     clusterProfiler,
     data.table,
