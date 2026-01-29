@@ -149,6 +149,8 @@ GOaGO <- function(
         # remove duplicates in the universe
         universe <- unique(universe)
     }
+    # should be a character (not integer) vector, as it will be used as factor levels
+    universe <- as.character(universe)
 
     # use enrichGO to fetch the information on gene-to-term associations
     ego <- enrichGO(gene = universe, OrgDb = OrgDb, keyType = keyType, ont = ont, pAdjustMethod = "none", pvalueCutoff = Inf, qvalueCutoff = Inf, minGSSize = minGSSize, maxGSSize = maxGSSize)
