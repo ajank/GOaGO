@@ -19,10 +19,10 @@ Imports:
     ggplot2,
     ggridges,
     Matrix,
-    methods,
     qvalue
 Depends: 
-    R (>= 4.4.0)
+    R (>= 4.4.0),
+    methods
 biocViews: GO, GeneSetEnrichment
 URL: https://github.com/ajank/GOaGO
 BugReports: https://github.com/ajank/GOaGO/issues
