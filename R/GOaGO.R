@@ -132,7 +132,7 @@ uniqueGenePairs <- function(genePairs) {
 
 GOaGO <- function(
       genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
-      minTermPairs = 1, numPermutations = 10000L, universe,
+      minTermPairs = 1, numPermutations = 10000, universe,
       pvalueCutoff = 0.05, pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
 ) {
     # extract unique gene pairs from the data frame provided
