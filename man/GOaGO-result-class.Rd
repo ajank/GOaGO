@@ -15,7 +15,29 @@ following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 the GO term), \code{Count} (number of input gene pairs sharing the given
 term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-\code{pvalue}, \code{p.adjust}, \code{qvalue}}
+\code{pvalue}, \code{p.adjust}, \code{qvalue}.}
+
+\item{\code{pvalueCutoff}}{adjusted p-value cutoff on enrichment tests}
+
+\item{\code{pAdjustMethod}}{p-value adjustment method}
+
+\item{\code{qvalueCutoff}}{q-value cutoff on enrichment tests}
+
+\item{\code{minTermPairs}}{cutoff for number of pairs that share a GO term for this
+term to be considered}
+
+\item{\code{numPermutations}}{number of permutations performed in the enrichment
+test}
+
+\item{\code{minGSSize}}{minimal size of genes annotated for testing}
+
+\item{\code{maxGSSize}}{maximal size of genes annotated for testing}
+
+\item{\code{organism}}{scientific name of the genus and species}
+
+\item{\code{ontology}}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all three}
+
+\item{\code{keyType}}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL"}
 
 \item{\code{genePairs}}{A data frame with the input gene pairs, with the columns
 \code{geneID1}, \code{geneID2} and \code{pairID}.}
@@ -27,5 +49,7 @@ with the input gene pairs, with the columns \code{pairID} and \code{ID}
 \item{\code{permutedResult}}{A data frame with the columns \code{ID} (of the GO
 term) and \code{Count}, keeping the numbers of permuted gene pairs sharing
 the term as obtained in every random permutation.}
+
+\item{\code{universe}}{a set of background genes}
 }}
 

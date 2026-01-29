@@ -5,7 +5,19 @@
 ##'   the GO term), \code{Count} (number of input gene pairs sharing the given
 ##'   term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 ##'   \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}
+##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
+##' @slot pvalueCutoff adjusted p-value cutoff on enrichment tests
+##' @slot pAdjustMethod p-value adjustment method
+##' @slot qvalueCutoff q-value cutoff on enrichment tests
+##' @slot minTermPairs cutoff for number of pairs that share a GO term for this
+##'   term to be considered
+##' @slot numPermutations number of permutations performed in the enrichment
+##'   test
+##' @slot minGSSize minimal size of genes annotated for testing
+##' @slot maxGSSize maximal size of genes annotated for testing
+##' @slot organism scientific name of the genus and species
+##' @slot ontology one of "BP", "MF", and "CC" subontologies, or "ALL" for all three
+##' @slot keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
 ##' @slot genePairs A data frame with the input gene pairs, with the columns
 ##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
 ##' @slot pairTerms A data frame linking the enriched Gene Ontology categories
@@ -14,29 +26,26 @@
 ##' @slot permutedResult A data frame with the columns \code{ID} (of the GO
 ##'   term) and \code{Count}, keeping the numbers of permuted gene pairs sharing
 ##'   the term as obtained in every random permutation.
+##' @slot universe a set of background genes
 ##' @export
 
 setClass("GOaGO-result",
-    representation = representation(
-        result         = "data.frame",
-        genePairs      = "data.frame",
-        pairTerms      = "data.frame",
-        permutedResult = "data.frame"
-        # pvalueCutoff   = "numeric",
-        # pAdjustMethod  = "character",
-        # qvalueCutoff   = "numeric",
-        # minTermPairs
-        # number of permutations
-        # organism       = "character",
-        # ontology       = "character",
-        # gene           = "character",
-        # keytype        = "character",
-        # universe       = "character",
-        # gene2Symbol    = "character",
-        # geneSets       = "list",
-        # termsim        = "matrix",
-        # method         = "character",
-        # dr             = "list"
+    slots = c(
+        result          = "data.frame",
+        pvalueCutoff    = "numeric",
+        pAdjustMethod   = "character",
+        qvalueCutoff    = "numeric",
+        minTermPairs    = "numeric",
+        numPermutations = "numeric",
+        minGSSize       = "numeric",
+        maxGSSize       = "numeric",
+        organism        = "character",
+        ontology        = "character",
+        keyType         = "character",
+        genePairs       = "data.frame",
+        pairTerms       = "data.frame",
+        permutedResult  = "data.frame",
+        universe        = "character"
     )
 )
 
@@ -251,6 +260,22 @@ GOaGO <- function(
     # sort the results according to p-value
     result <- result[order(pvalue), ]
 
-    result <- new("GOaGO-result", result = result, genePairs = genePairs, pairTerms = pairTerms, permutedResult = permutedResult)
+    result <- new("GOaGO-result",
+        result = result,
+        pvalueCutoff = pvalueCutoff,
+        pAdjustMethod = pAdjustMethod,
+        qvalueCutoff = qvalueCutoff,
+        minTermPairs = minTermPairs,
+        numPermutations = numPermutations,
+        minGSSize = minGSSize,
+        maxGSSize = maxGSSize,
+        organism = AnnotationDbi::species(OrgDb),
+        ontology = ont,
+        keyType = keyType,
+        genePairs = genePairs,
+        pairTerms = pairTerms,
+        permutedResult = permutedResult,
+        universe = universe
+    )
     return(result)
 }
