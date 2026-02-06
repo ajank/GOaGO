@@ -1,6 +1,7 @@
 export("GOaGO")
-export("keyType")
 export("DotPlot")
+export("genePairs")
+export("keyType")
 export("RidgePlot")
 
 exportClasses("GOaGO-result")
