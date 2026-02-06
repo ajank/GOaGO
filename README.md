@@ -35,7 +35,7 @@ library(GOaGO)
 data("genePairsGM12878Specific")
 tail(genePairsGM12878Specific)
 #>    loopID chrom1   start1     end1 centroid1 distance_to_TSS1 geneID1 chrom2
-#>     <int> <char>    <int>    <int>     <int>            <int>   <int> <char>
+#>     <int> <char>    <int>    <int>     <int>            <int>  <char> <char>
 #> 1:   9384   chrX 55740000 55750000  55745000                0   10325   chrX
 #> 2:   9390   chrX 57610000 57620000  57615000                0  158586   chrX
 #> 3:   9418   chrX 73830000 73835000  73832500                0   51132   chrX
@@ -43,7 +43,7 @@ tail(genePairsGM12878Specific)
 #> 5:   9434   chrX 80060000 80070000  80065000                0  254065   chrX
 #> 6:   9434   chrX 80060000 80070000  80065000                0  254065   chrX
 #>      start2     end2 centroid2 distance_to_TSS2 geneID2 loop_distance
-#>       <int>    <int>     <int>            <int>   <int>         <int>
+#>       <int>    <int>     <int>            <int>  <char>         <int>
 #> 1: 56750000 56760000  56755000             4016  442454       1010000
 #> 2: 57940000 57950000  57940000             2933    7789        325000
 #> 3: 74140000 74145000  74142500              286  340533        310000
