@@ -7,7 +7,7 @@ containing the same gene twice) are found in the `genePairs` argument", {
     )
     expect_equal(
         genePairs,
-        data.table(geneID1 = "g1", geneID2 = "g2", pairID = 1)
+        data.table(pairID = 1, geneID1 = "g1", geneID2 = "g2")
     )
 })
 
@@ -20,7 +20,7 @@ are found in the `genePairs` argument", {
     )
     expect_equal(
         genePairs,
-        data.table(geneID1 = "g1", geneID2 = "g2", pairID = 1)
+        data.table(pairID = 1, geneID1 = "g1", geneID2 = "g2")
     )
 })
 

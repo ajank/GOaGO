@@ -12,8 +12,10 @@ containing gene identifiers; column \code{pairID} will also be used if
 provided.}
 }
 \value{
-A data frame. If loops or duplicates were removed, a warning will
-  alert you.
+A data frame with columns \code{pairID}, \code{geneID1} and
+  \code{geneID2}. If loops or duplicates were removed, a warning will
+  alert you. If column \code{pairID} was not provided in \code{genePairs},
+  an integer vector equal to \code{seq_len(nrow(result))} will be used.
 }
 \description{
 Given a data frame of gene pairs, this function will return the unique

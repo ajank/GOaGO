@@ -59,8 +59,10 @@ setClass("GOaGO-result",
 ##' @param genePairs a data frame with columns \code{geneID1} and \code{geneID2}
 ##'   containing gene identifiers; column \code{pairID} will also be used if
 ##'   provided.
-##' @returns A data frame. If loops or duplicates were removed, a warning will
-##'   alert you.
+##' @returns A data frame with columns \code{pairID}, \code{geneID1} and
+##'   \code{geneID2}. If loops or duplicates were removed, a warning will
+##'   alert you. If column \code{pairID} was not provided in \code{genePairs},
+##'   an integer vector equal to \code{seq_len(nrow(result))} will be used.
 uniqueGenePairs <- function(genePairs) {
     # ensure that gene identifiers are provided in the input data
     stopifnot("geneID1" %in% colnames(genePairs))
@@ -96,6 +98,7 @@ uniqueGenePairs <- function(genePairs) {
 
     if (!pairID_provided) {
         genePairs[, pairID := .I]
+        setcolorder(genePairs, "pairID")
     }
 
     return(genePairs)
