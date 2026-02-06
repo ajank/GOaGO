@@ -151,22 +151,24 @@ GOaGO <- function(
 ) {
     # extract unique gene pairs from the data frame provided
     genePairs <- uniqueGenePairs(genePairs)
+    # ensure that gene identifiers are character vectors
+    genePairs$geneID1 <- as.character(genePairs$geneID1)
+    genePairs$geneID2 <- as.character(genePairs$geneID2)
 
     # gene universe
     if (missing(universe)) {
         # if not explicitly provided, universe is constituted by all the genes
         # from all the gene pairs
-        universe <- unique(c(genePairs$geneID1, genePairs$geneID2))
+        universe <- c(genePairs$geneID1, genePairs$geneID2)
     } else {
+        # ensure that gene identifiers are character vectors
+        universe <- as.character(universe)
         # check if all the genes are within the universe
         stopifnot(genePairs$geneID1 %in% universe)
         stopifnot(genePairs$geneID2 %in% universe)
-        # remove duplicates in the universe
-        universe <- unique(universe)
     }
-    # the universe should be a character (not integer) vector, as it will be
-    # used as factor levels
-    universe <- as.character(universe)
+    # remove duplicates from the universe
+    universe <- unique(universe)
 
     # use enrichGO to fetch the information on gene-to-term associations
     ego <- enrichGO(
