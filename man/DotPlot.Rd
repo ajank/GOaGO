@@ -4,16 +4,16 @@
 \alias{DotPlot}
 \title{Dotplot of the overrepresented Gene Ontology terms}
 \usage{
-DotPlot(goago, minTermPairs = 5)
+DotPlot(object, minTermPairs = 5)
 }
 \arguments{
-\item{goago}{GO-a-GO results of class \code{GOaGO-result}}
+\item{object}{GO-a-GO results of class \code{GOaGO-result}}
 
-\item{minTermPairs}{take only the GO terms that are associated to at least
+\item{minTermPairs}{plot only the GO terms that are associated to at least
 the given number of gene pairs}
 }
 \value{
-A ggplot object that can be further customized using the
+A \code{ggplot} object that can be further customized using the
   \code{ggplot2} package.
 }
 \description{

@@ -2,18 +2,40 @@
 % Please edit documentation in R/plots.R
 \name{RidgePlot}
 \alias{RidgePlot}
-\title{Ridgeplot of the sampling distributions for the randomized gene pairs}
+\title{Ridgeplot of the sampling distributions for the randomized gene pairs.}
 \usage{
-RidgePlot(goago, minTermPairs = 5)
+RidgePlot(
+  object,
+  minTermPairs = 5,
+  showCategory = 10,
+  orderBy = "FoldEnrichment",
+  decreasing = TRUE,
+  font.size = 12,
+  label_format = 50
+)
 }
 \arguments{
-\item{goago}{GO-a-GO results of class \code{GOaGO-result}}
+\item{object}{GO-a-GO results of class \code{GOaGO-result}}
 
-\item{minTermPairs}{take only the GO terms that are associated to at least
+\item{minTermPairs}{plot only the GO terms that are associated to at least
 the given number of gene pairs}
+
+\item{showCategory}{number of terms to display or a vector of terms}
+
+\item{orderBy}{The order of the Y-axis, one of \code{"FoldEnrichment"},
+\code{"Ratio"} and \code{"Count"}.}
+
+\item{decreasing}{logical. Should the \code{orderBy} order be increasing or
+decreasing?}
+
+\item{font.size}{font size}
+
+\item{label_format}{a numeric value sets wrap length, alternatively a custom
+function to format axis labels. By default wraps names longer than 50
+characters.}
 }
 \value{
-A ggplot object that can be further customized using the
+A \code{ggplot} object that can be further customized using the
   \code{ggplot2} package.
 }
 \description{
