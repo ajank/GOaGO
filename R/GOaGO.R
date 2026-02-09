@@ -5,7 +5,7 @@
 ##'   the GO term), \code{Count} (number of input gene pairs sharing the given
 ##'   term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 ##'   \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
+##'   \code{FoldEnrichment}, \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 ##' @slot pvalueCutoff adjusted p-value cutoff on enrichment tests
 ##' @slot pAdjustMethod p-value adjustment method
 ##' @slot qvalueCutoff q-value cutoff on enrichment tests
@@ -264,10 +264,11 @@ GOaGO <- function(
         Count = pairCountsPerTerm_reduced,
         Ratio = pairCountsPerTerm_reduced / nrow(genePairsMatrix),
         BgRatio = rowMeans(permutedPairCountsPerTerm_reduced) /
-            nrow(genePairsMatrix),
-        pvalue = rowMeans(permutedPairCountsPerTerm_reduced >=
-            pairCountsPerTerm_reduced)
+            nrow(genePairsMatrix)
     )
+    result[, FoldEnrichment := Ratio / BgRatio]
+    result$pvalue <- rowMeans(permutedPairCountsPerTerm_reduced >=
+        pairCountsPerTerm_reduced)
 
     # adjust p-values and estimate q-values
     result[, p.adjust := p.adjust(pvalue, method = pAdjustMethod)]

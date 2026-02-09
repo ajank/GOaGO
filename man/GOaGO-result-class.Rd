@@ -15,7 +15,7 @@ following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 the GO term), \code{Count} (number of input gene pairs sharing the given
 term), \code{Ratio} (fraction of input gene pairs sharing the given term),
 \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-\code{pvalue}, \code{p.adjust}, \code{qvalue}.}
+\code{FoldEnrichment}, \code{pvalue}, \code{p.adjust}, \code{qvalue}.}
 
 \item{\code{pvalueCutoff}}{adjusted p-value cutoff on enrichment tests}
 

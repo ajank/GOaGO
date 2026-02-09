@@ -101,13 +101,13 @@ head(goago@result)
 #> 4                                                  protein-DNA complex organization
 #> 5                                                      protein-DNA complex assembly
 #> 6 antigen processing and presentation of exogenous peptide antigen via MHC class II
-#>   Count       Ratio      BgRatio pvalue p.adjust qvalue
-#> 1     8 0.010322581 0.0002703226      0        0      0
-#> 2     8 0.010322581 0.0001983226      0        0      0
-#> 3     6 0.007741935 0.0007245161      0        0      0
-#> 4     8 0.010322581 0.0005188387      0        0      0
-#> 5     8 0.010322581 0.0004468387      0        0      0
-#> 6     2 0.002580645 0.0000196129      0        0      0
+#>   Count       Ratio      BgRatio FoldEnrichment pvalue p.adjust qvalue
+#> 1     8 0.010322581 0.0002703226       38.18616      0        0      0
+#> 2     8 0.010322581 0.0001983226       52.04945      0        0      0
+#> 3     6 0.007741935 0.0007245161       10.68566      0        0      0
+#> 4     8 0.010322581 0.0005188387       19.89555      0        0      0
+#> 5     8 0.010322581 0.0004468387       23.10136      0        0      0
+#> 6     2 0.002580645 0.0000196129      131.57895      0        0      0
 ```
 
 Note that some of the *p*-values have the value of zero, which means
