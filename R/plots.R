@@ -109,8 +109,7 @@ DotPlot <- function(
         labs(y = NULL) +
         scale_x_continuous(expand = expansion(mult = 0.1)) +
         scale_y_discrete(labels = label_func) +
-        theme_dose(font.size) +
-        theme(axis.text.y = element_text(lineheight = 0.9))
+        theme_dose(font.size)
 
     return(p)
 }
@@ -182,7 +181,6 @@ RidgePlot <- function(
         labs(x = "Number of gene pairs sharing a term", y = NULL) +
         scale_y_discrete(labels = label_func) +
         theme_dose(font.size) +
-        theme(axis.text.y = element_text(lineheight = 0.9)) +
         theme(legend.position = "bottom")
 
     return(p)
