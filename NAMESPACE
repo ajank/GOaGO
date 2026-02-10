@@ -16,8 +16,10 @@ importFrom("clusterProfiler", "enrichGO")
 importFrom("data.table", ":=", "as.data.table", "data.table", "dcast",
     "setcolorder", "setnafill")
 importFrom("DOSE", "theme_dose")
-importFrom("ggplot2", "aes", "geom_point", "ggplot", "guide_legend", "guides",
-    "scale_color_manual", "scale_size", "theme", "xlab", "ylab")
+importFrom("ggplot2", "aes", "element_text", "expansion", "geom_point",
+    "ggplot", "label_wrap_gen", "labs", "scale_color_manual",
+    "scale_fill_manual", "scale_size", "scale_x_continuous", "scale_y_discrete",
+    "theme")
 importFrom("ggridges", "geom_density_ridges")
 importFrom("Matrix", "Matrix", "colSums", "which")
 importFrom("methods", "new", "show")

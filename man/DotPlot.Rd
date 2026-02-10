@@ -2,23 +2,58 @@
 % Please edit documentation in R/plots.R
 \name{DotPlot}
 \alias{DotPlot}
-\title{Dotplot of the overrepresented Gene Ontology terms}
+\title{Dotplot of the enriched Gene Ontology terms}
 \usage{
-DotPlot(object, minTermPairs = 5)
+DotPlot(
+  object,
+  minTermPairs = 5,
+  x = "FoldEnrichment",
+  color = "p.adjust",
+  size = "Count",
+  showCategory = 10,
+  orderBy = "FoldEnrichment",
+  decreasing = TRUE,
+  font.size = 12,
+  label_format = 50
+)
 }
 \arguments{
 \item{object}{GO-a-GO results of class \code{GOaGO-result}}
 
 \item{minTermPairs}{plot only the GO terms that are associated to at least
 the given number of gene pairs}
+
+\item{x}{Variable for X-axis, one of \code{"FoldEnrichment"}, \code{"Ratio"}
+and \code{"Count"}.}
+
+\item{color}{Variable used to color enriched terms, e.g. \code{"pvalue"},
+\code{"p.adjust"} or \code{"qvalue"}.}
+
+\item{size}{Variable used to scale the sizes of points, one of
+\code{"FoldEnrichment"}, \code{"Ratio"} and \code{"Count"}.}
+
+\item{showCategory}{number of terms to display or a vector of terms}
+
+\item{orderBy}{The order of the Y-axis, one of \code{"FoldEnrichment"},
+\code{"Ratio"} and \code{"Count"}.}
+
+\item{decreasing}{logical. Should the \code{orderBy} order be increasing or
+decreasing?}
+
+\item{font.size}{font size}
+
+\item{label_format}{a numeric value sets wrap length, alternatively a custom
+function to format axis labels. By default wraps names longer than 50
+characters.}
 }
 \value{
 A \code{ggplot} object that can be further customized using the
   \code{ggplot2} package.
 }
 \description{
-The x-axis shows the log~2~ fold change of the fraction of gene pairs
-sharing the given terms. Color indicates the adjusted p-value.
+By default, plots the most enriched terms, with fold enrichment on the
+X-axis, point size indicating the number of gene pairs sharing the given
+term, and point color -- the adjusted p-value.
 }
 \examples{
 library(org.Hs.eg.db)

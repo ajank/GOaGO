@@ -43,14 +43,30 @@
 }
 
 
-##' Dotplot of the overrepresented Gene Ontology terms
+##' Dotplot of the enriched Gene Ontology terms
 ##'
-##' The x-axis shows the log~2~ fold change of the fraction of gene pairs
-##' sharing the given terms. Color indicates the adjusted p-value.
+##' By default, plots the most enriched terms, with fold enrichment on the
+##' X-axis, point size indicating the number of gene pairs sharing the given
+##' term, and point color -- the adjusted p-value.
 ##'
 ##' @param object GO-a-GO results of class \code{GOaGO-result}
 ##' @param minTermPairs plot only the GO terms that are associated to at least
 ##'   the given number of gene pairs
+##' @param x Variable for X-axis, one of \code{"FoldEnrichment"}, \code{"Ratio"}
+##'   and \code{"Count"}.
+##' @param color Variable used to color enriched terms, e.g. \code{"pvalue"},
+##'   \code{"p.adjust"} or \code{"qvalue"}.
+##' @param size Variable used to scale the sizes of points, one of
+##'   \code{"FoldEnrichment"}, \code{"Ratio"} and \code{"Count"}.
+##' @param showCategory number of terms to display or a vector of terms
+##' @param orderBy The order of the Y-axis, one of \code{"FoldEnrichment"},
+##'   \code{"Ratio"} and \code{"Count"}.
+##' @param decreasing logical. Should the \code{orderBy} order be increasing or
+##'   decreasing?
+##' @param font.size font size
+##' @param label_format a numeric value sets wrap length, alternatively a custom
+##'   function to format axis labels. By default wraps names longer than 50
+##'   characters.
 ##' @returns A \code{ggplot} object that can be further customized using the
 ##'   \code{ggplot2} package.
 ##' @export
