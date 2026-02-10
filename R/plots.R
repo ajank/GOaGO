@@ -9,7 +9,7 @@
     orderBy = "FoldEnrichment",
     decreasing = TRUE
 ) {
-    dt <- as.data.table(goago)
+    dt <- as.data.table(object)
     dt <- dt[Count >= minTermPairs, ]
 
     if (!orderBy %in% colnames(dt)) {

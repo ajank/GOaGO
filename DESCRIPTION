@@ -16,6 +16,7 @@ Imports:
     BiocParallel,
     clusterProfiler,
     data.table,
+    DOSE,
     ggplot2,
     ggridges,
     Matrix,
