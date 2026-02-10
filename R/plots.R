@@ -64,25 +64,46 @@
 ##' )
 ##'
 ##' DotPlot(goago)
-DotPlot <- function(object, minTermPairs = 5) {
-    dt <- .sortedResult(goago)
-    dt <- dt[Count >= minTermPairs, ]
+DotPlot <- function(
+    object,
+    minTermPairs = 5,
+    x = "FoldEnrichment",
+    color = "p.adjust",
+    size = "Count",
+    showCategory = 10,
+    orderBy = "FoldEnrichment",
+    decreasing = TRUE,
+    font.size = 12,
+    label_format = 50
+) {
+    dt <- .sortedResult(object,
+        minTermPairs = minTermPairs,
+        showCategory = showCategory, orderBy = orderBy, decreasing = decreasing
+    )
 
-    p <- ggplot(dt, aes(
-        x = log2(Ratio / BgRatio),
-        y = label, size = Count, color = p.adjust
-    )) +
+    label_func <- .label_format(label_format)
+
+    p <- ggplot(
+        dt, aes(
+            x = .data[[x]], y = Description, size = .data[[size]],
+            color = .data[[color]]
+        )
+    ) +
         geom_point() +
-        ylab(NULL) +
-        scale_size(range = c(3, 8))
+        labs(y = NULL) +
+        scale_x_continuous(expand = expansion(mult = 0.1)) +
+        scale_y_discrete(labels = label_func) +
+        theme_dose(font.size) +
+        theme(axis.text.y = element_text(lineheight = 0.9))
+
     return(p)
 }
 
 
-##' Ridgeplot of the sampling distributions for the randomized gene pairs.
+##' Ridgeplot of the sampling distributions for the randomized gene pairs
 ##'
 ##' Ridgeplot of the sampling distributions of numbers of gene pairs sharing
-##' each Gene Ontology term, obtained for the randomized gene pairs.
+##' each enriched Gene Ontology term, obtained for the randomized gene pairs.
 ##'
 ##' @param object GO-a-GO results of class \code{GOaGO-result}
 ##' @param minTermPairs plot only the GO terms that are associated to at least

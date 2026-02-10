@@ -2,7 +2,7 @@
 % Please edit documentation in R/genePairs.R
 \name{genePairs}
 \alias{genePairs}
-\title{Extract the enriched Gene Ontology terms along with gene pairs sharing them.}
+\title{Extract the enriched Gene Ontology terms along with gene pairs sharing them}
 \usage{
 genePairs(object, OrgDb = NULL)
 }
@@ -19,7 +19,7 @@ A data frame similar to returned by \code{as.data.frame(object)},
   \code{geneSymbol1} and \code{geneSymbol2} will also be added.
 }
 \description{
-Extract the enriched Gene Ontology terms along with gene pairs sharing them.
+Extract the enriched Gene Ontology terms along with gene pairs sharing them
 }
 \examples{
 library(org.Hs.eg.db)

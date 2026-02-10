@@ -2,7 +2,7 @@
 % Please edit documentation in R/GOaGO.R
 \name{GOaGO}
 \alias{GOaGO}
-\title{Gene Ontology enrichment analysis in a set of gene pairs.}
+\title{Gene Ontology enrichment analysis in a set of gene pairs}
 \usage{
 GOaGO(
   genePairs,

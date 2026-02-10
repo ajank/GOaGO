@@ -1,4 +1,4 @@
-##' Extract the enriched Gene Ontology terms along with gene pairs sharing them.
+##' Extract the enriched Gene Ontology terms along with gene pairs sharing them
 ##'
 ##' @param object of class \code{GOaGO-result}
 ##' @param OrgDb OrgDb to map gene identifiers to gene symbols

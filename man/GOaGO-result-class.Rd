@@ -3,9 +3,9 @@
 \docType{class}
 \name{GOaGO-result-class}
 \alias{GOaGO-result-class}
-\title{An S4 class to represent the results of GO-a-GO enrichment analysis.}
+\title{An S4 class to represent the results of GO-a-GO enrichment analysis}
 \description{
-An S4 class to represent the results of GO-a-GO enrichment analysis.
+An S4 class to represent the results of GO-a-GO enrichment analysis
 }
 \section{Slots}{
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{RidgePlot}
 \alias{RidgePlot}
-\title{Ridgeplot of the sampling distributions for the randomized gene pairs.}
+\title{Ridgeplot of the sampling distributions for the randomized gene pairs}
 \usage{
 RidgePlot(
   object,
@@ -40,7 +40,7 @@ A \code{ggplot} object that can be further customized using the
 }
 \description{
 Ridgeplot of the sampling distributions of numbers of gene pairs sharing
-each Gene Ontology term, obtained for the randomized gene pairs.
+each enriched Gene Ontology term, obtained for the randomized gene pairs.
 }
 \examples{
 library(org.Hs.eg.db)

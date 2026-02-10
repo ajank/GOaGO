@@ -1,4 +1,4 @@
-##' An S4 class to represent the results of GO-a-GO enrichment analysis.
+##' An S4 class to represent the results of GO-a-GO enrichment analysis
 ##'
 ##' @slot result A data frame of the enriched Gene Ontology terms, with the
 ##'   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
@@ -50,7 +50,7 @@ setClass("GOaGO-result",
 )
 
 
-##' Extract unique gene pairs from the data frame provided.
+##' Extract unique gene pairs from the data frame provided
 ##'
 ##' Given a data frame of gene pairs, this function will return the unique
 ##' pairs of genes, removing loops (gene pairs containing the same gene twice)
@@ -105,7 +105,7 @@ uniqueGenePairs <- function(genePairs) {
 }
 
 
-##' Gene Ontology enrichment analysis in a set of gene pairs.
+##' Gene Ontology enrichment analysis in a set of gene pairs
 ##'
 ##' Given a data frame of gene pairs, this function will return the enriched
 ##' Gene Ontology terms after FDR control.

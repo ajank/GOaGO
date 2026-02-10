@@ -2,7 +2,7 @@
 % Please edit documentation in R/GOaGO.R
 \name{uniqueGenePairs}
 \alias{uniqueGenePairs}
-\title{Extract unique gene pairs from the data frame provided.}
+\title{Extract unique gene pairs from the data frame provided}
 \usage{
 uniqueGenePairs(genePairs)
 }
