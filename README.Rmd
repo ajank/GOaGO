@@ -43,7 +43,7 @@ chromatin loops. We can inspect a few rows of the dataset:
 library(GOaGO)
 
 data("genePairsGM12878Specific")
-tail(genePairsGM12878Specific)
+head(genePairsGM12878Specific, 10)
 ```
 
 The column names ending with `1` and `2` refer to the first and second loop
