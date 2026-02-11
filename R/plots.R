@@ -13,14 +13,10 @@
     dt <- dt[Count >= minTermPairs, ]
 
     if (!orderBy %in% colnames(dt)) {
-        message("wrong orderBy parameter: ", orderBy)
+        message("wrong orderBy argument: ", orderBy)
     }
 
-    # note the reverse order, so that the terms show up as expected
-    # (top-to-bottom, reverse to the scale direction) in the final plot
-    ind <- order(dt[[orderBy]], decreasing = !decreasing)
-    dt[, ID := factor(ID, ID[ind])]
-    dt[, Description := factor(Description, Description[ind])]
+    dt <- dt[order(dt[[orderBy]], decreasing = decreasing), ]
 
     if (is.numeric(showCategory)) {
         dt <- head(dt, showCategory)
@@ -28,8 +24,14 @@
         dt <- dt[ID %in% showCategory, ]
     }
 
+    # note the reverse order of factors, so that the terms show up as expected
+    # (top-to-bottom, reverse to the scale direction) in the final plot
+    dt[, ID := factor(ID, rev(ID))]
+    dt[, Description := factor(Description, rev(Description))]
+
     return(dt)
 }
+
 
 # Internal function to wrap labels at a given wrap length, or use a labeller
 # function provided.
