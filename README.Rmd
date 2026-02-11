@@ -20,10 +20,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-GO-a-GO annotates functional terms that are overrepresented in a given set of
-gene pairs. The enrichment of Gene Ontology terms is calculated from a
-permutation test for overrepresentation of gene pairs that are associated with a
-common term.
+GO-a-GO annotates Gene Ontology terms that are enriched in a given
+set of gene pairs. The enrichment is calculated from a permutation test for
+overrepresentation of gene pairs that are associated with a common term.
+Such gene pairs are counted for the original set of gene pairs and compared
+against randomized sets in which the structure of the pairs is preserved,
+but the gene identities (including the associated terms) are permuted.
 
 ## Installation
 
@@ -36,22 +38,21 @@ devtools::install_github("ajank/GOaGO")
 
 ## Example
 
-Let us run GO-a-GO on a set of gene pairs associated with human GM12878-specific
-chromatin loops. We can inspect a few rows of the dataset:
+Let us run GO-a-GO on a set of gene pairs associated with chromatin loops
+identified in human cell line GM12878. We can inspect a few rows of the dataset:
 
 ```{r dataset}
 library(GOaGO)
 
-data("genePairsGM12878Specific")
-head(genePairsGM12878Specific, 10)
+data("genePairsGM12878")
+head(genePairsGM12878)
 ```
 
 The column names ending with `1` and `2` refer to the first and second loop
 anchors, respectively. The essential columns are: `geneID1` and `geneID2` (gene
-identifiers from a database of choice), `pairID` (identifier of a gene pair),
-and `loopID` (identifier of a chromatin loop).  As some loop anchors overlapped
-Transcription Start Sites of multiple genes, the dataset contains all gene
-combinations for these loops.
+identifiers from a database of choice) and `loopID` (identifier of a chromatin
+loop). As some loop anchors overlapped multiple Transcription Start Sites,
+possibly of many genes, for these loops the dataset contains all combinations.
 
 When running GO-a-GO, we should specify that gene identifiers are from the
 Entrez database, and use the Bioconductor `org.Hs.eg.db` package as the source
@@ -67,25 +68,26 @@ library(org.Hs.eg.db)
 library(BiocParallel)
 options(MulticoreParam = MulticoreParam(workers = 2))
 
-goago <- GOaGO(genePairsGM12878Specific,
+goago <- GOaGO(genePairsGM12878,
     keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL"
 )
 ```
 
-We can inspect the overrepresented GO terms:
+We can inspect the enriched GO terms:
 
 ```{r result}
-head(goago@result)
+head(as.data.frame(goago))
 ```
 
 Note that some of the *p*-values have the value of zero, which means that for
 all the randomizations fewer gene pairs were associated with a given term than
 in the input dataset.
 
-We can plot the overrepresented GO terms as a dotplot. The x-axis shows the
-log~2~ fold change of the fraction of gene pairs sharing the given term; `Ratio`
-is the fraction in the input gene pairs, while `BgRatio` is the fraction in
-permuted ones. Color indicates the adjusted *p*-value:
+We can plot the enriched GO terms as a dotplot. The X-axis shows the fold
+enrichment of the fraction of gene pairs sharing the given term, calculated as
+a quotient of `PairRatio` (the fraction in the input gene pairs) and `BgRatio`
+(the fraction in permuted ones). Point size indicates the number of input gene
+pairs sharing the given term, and point color -- the adjusted *p*-value:
 
 ```{r dotplot}
 DotPlot(goago)
