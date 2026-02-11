@@ -18,8 +18,9 @@ as.data.frame(x, row.names=NULL, optional=FALSE, ...)
 A data frame of the enriched Gene Ontology terms, with the
   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
   the GO term), \code{Count} (number of input gene pairs sharing the given
-  term), \code{Ratio} (fraction of input gene pairs sharing the given term),
-  \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
+  term), \code{PairRatio} (fraction of input gene pairs sharing the given
+  term), \code{BgRatio} (fraction of permuted gene pairs sharing the given
+  term), \code{FoldEnrichment} (quotient of the two fractions),
   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 }
 \description{

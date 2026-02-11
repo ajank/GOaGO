@@ -3,9 +3,10 @@
 ##' @slot result A data frame of the enriched Gene Ontology terms, with the
 ##'   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 ##'   the GO term), \code{Count} (number of input gene pairs sharing the given
-##'   term), \code{Ratio} (fraction of input gene pairs sharing the given term),
-##'   \code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-##'   \code{FoldEnrichment}, \code{pvalue}, \code{p.adjust}, \code{qvalue}.
+##'   term), \code{PairRatio} (fraction of input gene pairs sharing the given
+##'   term), \code{BgRatio} (fraction of permuted gene pairs sharing the given
+##'   term), \code{FoldEnrichment} (quotient of the two fractions),
+##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 ##' @slot pvalueCutoff adjusted p-value cutoff on enrichment tests
 ##' @slot pAdjustMethod p-value adjustment method
 ##' @slot qvalueCutoff q-value cutoff on enrichment tests
@@ -259,11 +260,11 @@ GOaGO <- function(
     result <- cbind(
         egoResult[sel, ..cols],
         Count = pairCountsPerTerm_reduced,
-        Ratio = pairCountsPerTerm_reduced / nrow(genePairsMatrix),
+        PairRatio = pairCountsPerTerm_reduced / nrow(genePairsMatrix),
         BgRatio = rowMeans(permutedPairCountsPerTerm_reduced) /
             nrow(genePairsMatrix)
     )
-    result[, FoldEnrichment := Ratio / BgRatio]
+    result[, FoldEnrichment := PairRatio / BgRatio]
     result$pvalue <- rowMeans(permutedPairCountsPerTerm_reduced >=
         pairCountsPerTerm_reduced)
 

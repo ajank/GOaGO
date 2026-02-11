@@ -90,7 +90,7 @@ keyType <- "ENTREZID"
 ##' Hence, we set `minGSSize` and `maxGSSize` so that no term is excluded.
 
 test_that("`GOaGO` should return a `GOaGO-result` instance, with statistics
-(Count, Ratio) consistent with the simulated data", {
+(Count, PairRatio) consistent with the simulated data", {
     testthat::skip_if_not_installed("org.Hs.eg.db")
     genePairs <- simulate_gene_pairs(
         org.Hs.eg.db::org.Hs.eg.db, term1, term2,
@@ -104,11 +104,11 @@ test_that("`GOaGO` should return a `GOaGO-result` instance, with statistics
     expect_equal(subset(goago@result, ID == term1)$Count, num_term1_pairs)
     expect_equal(subset(goago@result, ID == term2)$Count, num_term2_pairs)
     expect_equal(
-        subset(goago@result, ID == term1)$Ratio,
+        subset(goago@result, ID == term1)$PairRatio,
         num_term1_pairs / (num_term1_pairs + num_term2_pairs)
     )
     expect_equal(
-        subset(goago@result, ID == term2)$Ratio,
+        subset(goago@result, ID == term2)$PairRatio,
         num_term2_pairs / (num_term1_pairs + num_term2_pairs)
     )
 })

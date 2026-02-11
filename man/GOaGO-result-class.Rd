@@ -13,9 +13,10 @@ An S4 class to represent the results of GO-a-GO enrichment analysis
 \item{\code{result}}{A data frame of the enriched Gene Ontology terms, with the
 following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
 the GO term), \code{Count} (number of input gene pairs sharing the given
-term), \code{Ratio} (fraction of input gene pairs sharing the given term),
-\code{BgRatio} (fraction of permuted gene pairs sharing the given term),
-\code{FoldEnrichment}, \code{pvalue}, \code{p.adjust}, \code{qvalue}.}
+term), \code{PairRatio} (fraction of input gene pairs sharing the given
+term), \code{BgRatio} (fraction of permuted gene pairs sharing the given
+term), \code{FoldEnrichment} (quotient of the two fractions),
+\code{pvalue}, \code{p.adjust}, \code{qvalue}.}
 
 \item{\code{pvalueCutoff}}{adjusted p-value cutoff on enrichment tests}
 

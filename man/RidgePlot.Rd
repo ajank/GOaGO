@@ -23,7 +23,7 @@ the given number of gene pairs}
 \item{showCategory}{number of terms to display or a vector of terms}
 
 \item{orderBy}{The order of the Y-axis, one of \code{"FoldEnrichment"},
-\code{"Ratio"} and \code{"Count"}.}
+\code{"PairRatio"} and \code{"Count"}.}
 
 \item{decreasing}{logical. Should the \code{orderBy} order be increasing or
 decreasing?}

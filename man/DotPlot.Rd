@@ -23,19 +23,19 @@ DotPlot(
 \item{minTermPairs}{plot only the GO terms that are associated to at least
 the given number of gene pairs}
 
-\item{x}{Variable for X-axis, one of \code{"FoldEnrichment"}, \code{"Ratio"}
-and \code{"Count"}.}
+\item{x}{Variable for X-axis, one of \code{"FoldEnrichment"},
+\code{"PairRatio"} and \code{"Count"}.}
 
 \item{color}{Variable used to color enriched terms, e.g. \code{"pvalue"},
 \code{"p.adjust"} or \code{"qvalue"}.}
 
 \item{size}{Variable used to scale the sizes of points, one of
-\code{"FoldEnrichment"}, \code{"Ratio"} and \code{"Count"}.}
+\code{"FoldEnrichment"}, \code{"PairRatio"} and \code{"Count"}.}
 
 \item{showCategory}{number of terms to display or a vector of terms}
 
 \item{orderBy}{The order of the Y-axis, one of \code{"FoldEnrichment"},
-\code{"Ratio"} and \code{"Count"}.}
+\code{"PairRatio"} and \code{"Count"}.}
 
 \item{decreasing}{logical. Should the \code{orderBy} order be increasing or
 decreasing?}

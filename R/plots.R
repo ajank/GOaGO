@@ -54,15 +54,15 @@
 ##' @param object GO-a-GO results of class \code{GOaGO-result}
 ##' @param minTermPairs plot only the GO terms that are associated to at least
 ##'   the given number of gene pairs
-##' @param x Variable for X-axis, one of \code{"FoldEnrichment"}, \code{"Ratio"}
-##'   and \code{"Count"}.
+##' @param x Variable for X-axis, one of \code{"FoldEnrichment"},
+##'   \code{"PairRatio"} and \code{"Count"}.
 ##' @param color Variable used to color enriched terms, e.g. \code{"pvalue"},
 ##'   \code{"p.adjust"} or \code{"qvalue"}.
 ##' @param size Variable used to scale the sizes of points, one of
-##'   \code{"FoldEnrichment"}, \code{"Ratio"} and \code{"Count"}.
+##'   \code{"FoldEnrichment"}, \code{"PairRatio"} and \code{"Count"}.
 ##' @param showCategory number of terms to display or a vector of terms
 ##' @param orderBy The order of the Y-axis, one of \code{"FoldEnrichment"},
-##'   \code{"Ratio"} and \code{"Count"}.
+##'   \code{"PairRatio"} and \code{"Count"}.
 ##' @param decreasing logical. Should the \code{orderBy} order be increasing or
 ##'   decreasing?
 ##' @param font.size font size
@@ -124,7 +124,7 @@ DotPlot <- function(
 ##'   the given number of gene pairs
 ##' @param showCategory number of terms to display or a vector of terms
 ##' @param orderBy The order of the Y-axis, one of \code{"FoldEnrichment"},
-##'   \code{"Ratio"} and \code{"Count"}.
+##'   \code{"PairRatio"} and \code{"Count"}.
 ##' @param decreasing logical. Should the \code{orderBy} order be increasing or
 ##'   decreasing?
 ##' @param font.size font size
