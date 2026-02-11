@@ -1,32 +1,33 @@
-##' Gene pairs associated with GM12878-specific chromatin loops
+##' Gene pairs associated with chromatin loops in GM12878 cell line
 ##'
-##' The dataset is based on 3,638 chromatin loops specific to cell line GM12878,
-##' i.e. the ones which did not overlap any loop annotated in the other studied
-##' cell types. Of these chromatin loops, 659 overlapped at least one gene
-##' Transcription Start Site (TSS) at both loop anchors. As some loop anchors
-##' overlapped TSSes of multiple genes, the dataset contains all gene
-##' combinations for these loops, yielding a total of 811 GM12878-specific gene
-##' pairs, of which 775 pairs are unique.
+##' The dataset is based on 9,448 chromatin loops identified in human cell line
+##' GM12878 as peaks in Hi-C contact maps. Of these chromatin loops, 1,581
+##' overlapped at least one gene Transcription Start Site (TSS) at both loop
+##' anchors. As some loop anchors overlapped multiple TSSes, possibly of
+##' different genes, the dataset contains all combinations for these loops,
+##' yielding a total of 2,339 gene pairs, of which 1,743 pairs are unique and do
+##' not contain the same gene twice.
 ##'
-##' @format ## `genePairsGM12878Specific`
-##' A data frame with 811 rows and 14 columns:
+##' @format A data frame with 2,339 rows and 15 columns:
 ##' \describe{
-##'   \item{loopID}{Loop identifier}
-##'   \item{chrom1}{Chromosome of loop anchor 1}
-##'   \item{start1}{Start coordinate of loop anchor 1}
-##'   \item{end1}{End coordinate of loop anchor 1}
-##'   \item{centroid1}{Centroid of loop anchor 1}
-##'   \item{distance_to_TSS1}{Distance between loop anchor 1 and the closest TSS
-##'     of the associated gene}
+##'   \item{loopID}{loop identifier}
+##'   \item{chrom1}{chromosome of loop anchor 1}
+##'   \item{start1}{start coordinate of loop anchor 1}
+##'   \item{end1}{end coordinate of loop anchor 1}
+##'   \item{centroid1}{centroid of loop anchor 1}
 ##'   \item{geneID1}{Entrez identifier of the gene associated to loop anchor 1}
-##'   \item{chrom2}{Chromosome of loop anchor 2}
-##'   \item{start2}{Start coordinate of loop anchor 2}
-##'   \item{end2}{End coordinate of loop anchor 2}
-##'   \item{centroid2}{Centroid of loop anchor 2}
-##'   \item{distance_to_TSS2}{Distance between loop anchor 2 and the closest TSS
-##'     of the associated gene}
+##'   \item{tss1}{TSS coordinate of the associated gene}
+##'   \item{strand1}{strand (\code{"+"} or \code{"-"}) of the associated gene}
+##'   \item{chrom2}{chromosome of loop anchor 2}
+##'   \item{start2}{start coordinate of loop anchor 2}
+##'   \item{end2}{end coordinate of loop anchor 2}
+##'   \item{centroid2}{centroid of loop anchor 2}
 ##'   \item{geneID2}{Entrez identifier of the gene associated to loop anchor 2}
-##'   \item{loop_distance}{Genomic distance between the anchor centroids.}
+##'   \item{tss2}{TSS coordinate of the associated gene}
+##'   \item{strand2}{strand (\code{"+"} or \code{"-"}) of the associated gene.}
 ##' }
-##' @source <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525>
-"genePairsGM12878Specific"
+##' @source https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525
+##' @references Rao, S. S., Huntley, M. H., \emph{et al.} (2014). A 3D map of
+##'   the human genome at kilobase resolution reveals principles of chromatin
+##'   looping. \emph{Cell}, 159(7), 1665-80.
+"genePairsGM12878"

@@ -12,12 +12,9 @@
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' genePairs(goago, OrgDb = org.Hs.eg.db)
 genePairs <- function(object, OrgDb = NULL) {
     # first merge the enriched Gene Ontology terms with all the input gene

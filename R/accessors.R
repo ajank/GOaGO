@@ -29,12 +29,9 @@ setAs("GOaGO-result", "data.frame", function(from) {
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' as.data.frame(goago)
 setMethod(
     "as.data.frame", signature(x = "GOaGO-result"),
@@ -63,12 +60,9 @@ setMethod(
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' as.data.table(goago)
 `.as.data.table.GOaGO-result` <- function(x, ...) {
     data.table(x@result, ...)
@@ -94,12 +88,9 @@ setMethod(
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' keyType(goago)
 keyType <- function(object) {
     object@keyType
@@ -120,12 +111,9 @@ keyType <- function(object) {
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' organism(goago)
 setMethod(
     "organism", signature(object = "GOaGO-result"),

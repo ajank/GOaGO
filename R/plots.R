@@ -75,12 +75,9 @@
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' DotPlot(goago)
 DotPlot <- function(
     object,
@@ -140,12 +137,9 @@ DotPlot <- function(
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' library("GOaGO")
-##' data("genePairsGM12878Specific")
+##' data("genePairsGM12878")
 ##'
-##' goago <- GOaGO(genePairsGM12878Specific,
-##'     keyType = "ENTREZID", OrgDb = org.Hs.eg.db
-##' )
-##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' RidgePlot(goago)
 RidgePlot <- function(
     object,
