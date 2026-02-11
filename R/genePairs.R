@@ -3,10 +3,11 @@
 ##' @param object of class \code{GOaGO-result}
 ##' @param OrgDb OrgDb to map gene identifiers to gene symbols
 ##' @returns A data frame similar to returned by \code{as.data.frame(object)},
-##'   with additional columns \code{pairID}, \code{geneID1} and \code{geneID2},
-##'   for each enriched Gene Ontology term providing all the gene pairs sharing
-##'   this term, one gene pair in each row. If \code{OrgDb} is provided,
-##'   \code{geneSymbol1} and \code{geneSymbol2} will also be added.
+##'   but including all the gene pairs sharing each enriched Gene Ontology term,
+##'   one gene pair in each row. Additional columns include \code{pairID},
+##'   \code{geneID1}, \code{geneID2} and any other columns provided in
+##'   \code{genePairs} argument to \code{\link{GOaGO}}. If \code{OrgDb} is
+##'   provided, \code{geneSymbol1} and \code{geneSymbol2} will also be added.
 ##' @seealso \code{\link{as.data.frame,GOaGO-result-method}}
 ##' @export
 ##' @examples

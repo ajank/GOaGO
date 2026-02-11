@@ -73,10 +73,8 @@ uniqueGenePairs <- function(genePairs) {
     pairID_provided <- "pairID" %in% colnames(genePairs)
     if (pairID_provided) {
         stopifnot(!anyDuplicated(genePairs$pairID))
-        genePairs <- with(genePairs, data.table(pairID, geneID1, geneID2))
-    } else {
-        genePairs <- with(genePairs, data.table(geneID1, geneID2))
     }
+    genePairs <- as.data.table(genePairs)
 
     n <- nrow(genePairs)
     genePairs[, gid1 := pmin(geneID1, geneID2)]
