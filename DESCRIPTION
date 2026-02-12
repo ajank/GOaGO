@@ -32,6 +32,10 @@ BugReports: https://github.com/ajank/GOaGO/issues
 RoxygenNote: 7.3.3
 Suggests:
     AnnotationDbi,
+    BiocStyle,
+    knitr,
     org.Hs.eg.db,
-    testthat (>= 3.0.0)
+    rmarkdown,
+    testthat
 Config/testthat/edition: 3
+VignetteBuilder: knitr

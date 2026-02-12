@@ -1,0 +1,315 @@
+---
+title: "Gene Ontology enrichment analysis of gene pairs with GO-a-GO"
+author: 
+  - name: Aleksander Jankowski
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_depth: 2
+date: "`r doc_date()`"
+package: "`r pkg_ver('GOaGO')`"
+vignette: >
+  %\VignetteIndexEntry{Gene Ontology enrichment analysis of gene pairs with GO-a-GO}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+bibliography: references.bib
+biblio-style: apalike
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "##"
+)
+```
+
+
+# Introduction
+
+`r Biocpkg("GOaGO")`, also spelled GO-a-GO, is an `R` package for Gene Ontology enrichment analysis in a given set of gene pairs.
+The identification of overrepresented Gene Ontology (GO) terms in a set of genes is a standard approach to obtain functional associations, e.g. to characterize the set of differentially expressed genes between treatment and control samples.
+The approach of GO-a-GO allows to identify overrepresented GO terms that are shared by both genes in a pair, given a set of gene pairs.
+This provides the opportunity to annotate which functions are associated with gene pairs defined by a selected group of chromatin contacts, such as differential contacts between cell types or chromatin loops.
+
+GO-a-GO calculates enrichment from a permutation test for overrepresentation of gene pairs that are associated with a shared GO term.
+Such gene pairs are counted for the original set of gene pairs and compared against randomized sets in which the structure of the pairs is preserved, but the gene identities (including the associated GO terms) are permuted.
+Therefore, we do not focus on the fact that the term is enriched in a group of genes, but that genes with this term get paired more often than expected.
+
+
+# Installation
+
+`r Biocpkg("GOaGO")` is an `R` package distributed as part of the Bioconductor [Bioconductor](http://bioconductor.org) project.
+To install GO-a-GO along with any package dependencies that are missing, use `r Biocpkg("BiocManager")`:
+
+```{r install, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+
+BiocManager::install("GOaGO")
+```
+
+
+# Quick start to using GO-a-GO
+
+First, load the package:
+
+```{r start, message = FALSE}
+library("GOaGO")
+```
+
+## Example dataset of gene pairs
+
+We will use an example dataset based on 9,448 chromatin loops [@rao_3d_2014] identified in human lymphoblastoid cell line GM12878.
+Chromatin loops are a level of 3D genome organization, formed when genomic loci (anchors) distant along the DNA double strand are in spatial proximity.
+They have an important role in regulation of gene expression, bringing regulatory elements into contact with their target genes.
+Several architectural proteins are involved in the formation of chromatin loops (e.g. CTCF in humans).
+Besides acting as architectural/regulatory regions, many loop anchors encompass Transcription Start Sites of activated or repressed genes.
+The existence of chromatin loops can be experimentally probed by chromatin conformation capture techniques, such as Hi-C, allowing to identify the loops as peaks in Hi-C contact maps.
+
+We can inspect a few rows of the dataset:
+
+```{r dataset}
+data("genePairsGM12878")
+head(genePairsGM12878)
+```
+
+The column names ending with `1` and `2` refer to the first and second loop anchors, respectively.
+The essential columns are: `geneID1` and `geneID2` (gene identifiers from the Entrez database) and `loopID` (identifier of a chromatin loop).
+Of the 9,448 chromatin loops in the original study, 1,581 overlapped at least one gene Transcription Start Site (TSS) at both loop anchors.
+As some loop anchors overlapped multiple TSSes, possibly of different genes, the dataset contains all combinations for these loops, yielding a total of 2,339 gene pairs:
+
+```{r nrow}
+nrow(genePairsGM12878)
+```
+
+From the first few rows you might have noticed that some gene pairs in this dataset are duplicated.
+The approach used by GO-a-GO is to take each gene pair once only, i.e. to treat gene pairs as a set, similar to taking the set of genes in existing GO enrichment approaches.
+Note that gene pair (A, B) is a duplicate of (B, A).
+Also, gene pairs containing the same gene twice are excluded by GO-a-GO as non-informative.
+In this dataset, these cases correspond to chromatin loops between different TSSes of the same gene.
+We will later see that the dataset contains 1,743 gene pairs that are unique and do not contain the same gene twice.
+
+## Enrichment analysis of the example dataset
+
+We will identify GO terms enriched in gene pairs associated with chromatin loops identified in human cell line GM12878.
+When running the main function `GOaGO`, we should specify that the gene identifiers are from the Entrez database.
+We will further use the Bioconductor `org.Hs.eg.db` package as the source of Gene Ontology annotations for human genes, taking all three subontologies (Biological Process, Molecular Function, and Cellular Component) by setting `ont = "ALL"`.
+We will run the default 10,000 permutations, and also use the default *p*-value cutoff of 0.05 with Benjamini-Hochberg correction:
+
+```{r goago, message = FALSE}
+library(org.Hs.eg.db)
+
+# set the number of CPU threads to use
+library(BiocParallel)
+options(MulticoreParam = MulticoreParam(workers = 2))
+
+goago <- GOaGO(genePairsGM12878,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL"
+)
+```
+
+Note that we got warned about duplicated gene pairs and gene pairs containing the same gene twice, as discussed above.
+We can now inspect the enriched GO terms, treating the resulting object of class `GOaGO-result` as a data frame:
+
+```{r result}
+head(as.data.frame(goago))
+```
+
+The enriched terms are internally ordered by *p*-value.
+While this allows for an easy cut-off, it is not a good criterion alone.
+We should further focus on the terms that have the highest `FoldEnrichment`, and also have sufficient `Count` (number of input gene pairs sharing the given term).
+
+Note that some of the *p*-values have the value of zero, which means that for all the randomizations fewer gene pairs were associated with a given term than in the input dataset.
+These values should be considered as less than 0.0001.
+
+## Plotting the enriched Gene Ontology terms
+
+We can plot the most enriched GO terms as a dotplot.
+The X-axis shows the fold enrichment of the fraction of gene pairs sharing the given term, calculated as a quotient of `PairRatio` (the fraction in the input gene pairs) and `BgRatio` (the fraction in permuted ones).
+Point size indicates the number of input gene pairs sharing the given term, and point color -- the adjusted *p*-value:
+
+```{r dotplot, fig.cap = "Dotplot of enriched Gene Ontology terms"}
+DotPlot(goago)
+```
+
+Note that by default only the terms associated with at least 5 gene pairs are shown; you can change this by setting `minTermPairs` to any other value.
+
+We can also see the sampling distributions of numbers of gene pairs sharing each GO term, obtained for the randomized gene pairs. From these distributions, empirical *p*-values were calculated:
+
+```{r ridgeplot, fig.cap = "Ridgeplot of enriched Gene Ontology terms"}
+RidgePlot(goago)
+```
+
+Given the shape of the above distributions, the low *p*-values are understandable.
+
+## Comparison to existing Gene Ontology enrichment approaches
+
+GO-a-GO identifies terms that get preferentially paired in a set of gene pairs, addressing a complementary problem to the identification of enriched terms in a set of genes.
+To confirm that the two approaches indeed yield different results, we will perform a comparison to GO term enrichment of the genes at loop anchors, without using the gene pair information.
+For this unpaired approach, we will use `enrichGO` function from widely used `clusterProfiler` package [@yu_clusterprofiler_2012].
+
+First, load the required packages:
+
+```{r setup-comparison, message = FALSE}
+library(clusterProfiler)
+library(ggplot2)
+library(ggrepel)
+```
+
+To extract the set of genes, we will go back to the example dataset of gene pairs.
+Note that for a fair comparison we will exclude self-loops, i.e. gene pairs (A, A), as these pairs are ignored by GO-a-GO.
+
+```{r ego}
+genes <- with(
+    subset(genePairsGM12878, geneID1 != geneID2),
+    unique(c(geneID1, geneID2))
+)
+
+ego <- enrichGO(genes,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL"
+)
+```
+
+We can plot the most enriched GO terms identified by `enrichGO` as a dotplot:
+
+```{r dotplot-ego, fig.cap = "Dotplot of enriched Gene Ontology terms, using unpaired approach by enrichGO"}
+DotPlot(ego)
+```
+
+At first glance, the most enriched terms in this unpaired approach are very different from the ones identified by GO-a-GO.
+This impression could be misleading, since we are plotting only the top 10 terms.
+For a more detailed comparison, we will need more permissive (relaxed) versions of both enrichment analyses.
+
+```{r goago-ego-relaxed}
+goago_relaxed <- GOaGO(genePairsGM12878,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL",
+    pvalueCutoff = Inf, qvalueCutoff = Inf
+)
+
+ego_relaxed <- enrichGO(genes,
+    keyType = "ENTREZID", OrgDb = org.Hs.eg.db, ont = "ALL",
+    pvalueCutoff = Inf, qvalueCutoff = Inf
+)
+```
+
+In these two objects we are have calculated statistics for `r format(nrow(as.data.frame(goago_relaxed)), big.mark = ",")` Gene Ontology terms that are shared by at least one gene pair, and separately for `r format(nrow(as.data.frame(ego_relaxed)), big.mark = ",")` terms that are associated to at least one gene.
+We will merge them and flag the enriched terms according to the previous results.
+
+```{r merge-go-ego}
+df <- merge(as.data.frame(goago_relaxed), as.data.frame(ego_relaxed),
+    by = c("ONTOLOGY", "ID", "Description"), suffixes = c(".GOaGO", ".enrichGO")
+)
+
+df$signif.GOaGO <- df$ID %in% as.data.frame(goago)$ID
+df$signif.enrichGO <- df$ID %in% ego$ID
+
+df$enrichment <- ifelse(df$signif.GOaGO,
+    ifelse(df$signif.enrichGO, "goago_and_ego", "goago_only"),
+    ifelse(df$signif.enrichGO, "ego_only", "insignificant")
+)
+```
+
+We can now compare the fold enrichment calculated using the two approaches.
+In the plot below, point size indicates the number of input gene pairs sharing the given term, and point color -- enrichment status.
+For better visibility, log scale is used for both axes.
+
+```{r comparison, fig.cap = "Gene Ontology term enrichment using unpaired approach by enrichGO (X-axis) and paired approach by GO-a-GO (Y-axis)", fig.wide = TRUE, fig.asp = 0.7}
+col_labels <- c(
+    goago_and_ego = "GO-a-GO and enrichGO",
+    goago_only = "GO-a-GO (paired) only",
+    ego_only = "enrichGO (unpaired) only",
+    insignificant = "none of the above"
+)
+
+col_values <- c(
+    goago_and_ego = "#6a3d9a",
+    goago_only = "#e31a1c",
+    ego_only = "#1f78b4",
+    insignificant = "gray80"
+)
+
+ggplot(
+    df,
+    aes(x = log2(FoldEnrichment.enrichGO), y = log2(FoldEnrichment.GOaGO), size = Count.GOaGO, color = enrichment)
+) +
+    geom_vline(xintercept = 0, lty = 2) +
+    geom_hline(yintercept = 0, lty = 2) +
+    geom_point(alpha = 0.3) +
+    scale_color_manual("Term enrichment", labels = col_labels, values = col_values) +
+    DOSE::theme_dose(12)
+```
+
+You may be surprised by the fact that the vast majority of the plotted terms were called enriched by GO-a-GO.
+This is due to the fact that `goago_relaxed` contains only the terms that are shared by at least one gene pair.
+
+To get a better view of the most frequent annotations, we will plot only the terms associated with at least 5 gene pairs, and show term descriptions as point labels:
+
+```{r comparison-with-labels, fig.cap = "Gene Ontology term enrichment using unpaired approach by enrichGO (X-axis) and paired approach by GO-a-GO (Y-axis), showing only the terms shared by at least 5 gene pairs", fig.wide = TRUE, fig.asp = 0.7}
+ggplot(
+    subset(df, Count.GOaGO >= 5),
+    aes(x = log2(FoldEnrichment.enrichGO), y = log2(FoldEnrichment.GOaGO), size = Count.GOaGO, color = enrichment)
+) +
+    geom_vline(xintercept = 0, lty = 2) +
+    geom_point(alpha = 0.3) +
+    geom_text_repel(aes(label = label_wrap_gen(50)(Description)), show.legend = FALSE, size = 3, lineheight = 0.9) +
+    scale_color_manual("Term enrichment", labels = col_labels, values = col_values) +
+    DOSE::theme_dose(12)
+```
+
+Many of the terms enriched in paired approach by GO-a-GO were not enriched in unpaired approach by enrichGO.
+What is more, some of the terms reported as enriched by GO-a-GO are actually *depleted* when annotating the gene set without the information on gene pairs.
+Explaining this conundrum requires further analysis and biological interpretation.
+
+## Extracting gene pairs associated with terms of interest
+
+For follow-up analysis, it is often desired to extract the enriched Gene Ontology terms along with the gene pairs sharing them.
+Function `termGenePairs` returns a data frame including all this information, including gene symbols fetched from the `OrgDb` object.
+For example, we can list the gene pairs associated with olfactory receptor activity:
+
+```{r termGenePairs}
+tgp <- termGenePairs(goago, org.Hs.eg.db)
+subset(tgp, ID == "GO:0004984") # olfactory receptor activity
+```
+
+As can be seen in the last two columns, these gene pairs involve several genes from the olfactory receptor gene family (which, incidentally, is the largest gene family in the human genome).
+
+## Obtaining additional statistics
+
+We can calculate the number of chromatin loops from the original study that overlapped at least one gene TSS at both loop anchors (should be 1,581):
+
+```{r num_loops_with_genes}
+length(unique(genePairsGM12878$loopID))
+```
+
+and the number of input gene pairs that are unique and do not contain the same gene twice (should be 1,743):
+
+```{r num_input_gene_pairs}
+nrow(genePairs(goago))
+```
+
+Further information is also reported by the method `show`, implicitly used here:
+
+```{r show}
+goago
+```
+
+
+# Citing GO-a-GO
+
+We hope that GO-a-GO will be useful for your research. Please use the following information to cite the package and the overall approach.
+
+```{r citation}
+citation("GOaGO")
+```
+
+
+# Session information
+
+```{r sessionInfo, echo = FALSE}
+sessionInfo()
+```
+
+
+# Bibliography
