@@ -9,7 +9,7 @@
 
 GO-a-GO annotates Gene Ontology terms that are enriched in a given set
 of gene pairs. The enrichment is calculated from a permutation test for
-overrepresentation of gene pairs that are associated with a common term.
+overrepresentation of gene pairs that are associated with a shared term.
 Such gene pairs are counted for the original set of gene pairs and
 compared against randomized sets in which the structure of the pairs is
 preserved, but the gene identities (including the associated terms) are
