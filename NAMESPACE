@@ -1,8 +1,8 @@
 export("GOaGO")
 export("DotPlot")
-export("genePairs")
 export("keyType")
 export("RidgePlot")
+export("termGenePairs")
 
 exportClasses("GOaGO-result")
 exportMethods("as.data.frame")

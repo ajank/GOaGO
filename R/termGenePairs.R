@@ -16,8 +16,8 @@
 ##' data("genePairsGM12878")
 ##'
 ##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
-##' genePairs(goago, OrgDb = org.Hs.eg.db)
-genePairs <- function(object, OrgDb = NULL) {
+##' termGenePairs(goago, OrgDb = org.Hs.eg.db)
+termGenePairs <- function(object, OrgDb = NULL) {
     # first merge the enriched Gene Ontology terms with all the input gene
     # pairs that share the given term (by identifier of the GO term)
     gp <- merge(as.data.table(object@result), object@pairTerms,
