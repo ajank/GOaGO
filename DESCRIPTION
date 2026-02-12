@@ -33,6 +33,7 @@ BugReports: https://github.com/ajank/GOaGO/issues
 RoxygenNote: 7.3.3
 Suggests:
     BiocStyle,
+    ggrepel,
     knitr,
     org.Hs.eg.db,
     rmarkdown,
