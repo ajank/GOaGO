@@ -98,6 +98,23 @@ keyType <- function(object) {
     object@keyType
 }
 
+##' Gene pairs accessor for \code{GOaGO-result} instance
+##'
+##' @param object of class \code{GOaGO-result}
+##' @returns A data frame with the input gene pairs, with the columns
+##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
+##' @export
+##' @examples
+##' library(org.Hs.eg.db)
+##' library("GOaGO")
+##' data("genePairsGM12878")
+##'
+##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
+##' genePairs(goago)
+genePairs <- function(object) {
+    object@genePairs
+}
+
 ##' organism method for \code{GOaGO-result} instance
 ##'
 ##' @name organism

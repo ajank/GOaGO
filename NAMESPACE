@@ -1,5 +1,6 @@
 export("GOaGO")
 export("DotPlot")
+export("genePairs")
 export("keyType")
 export("RidgePlot")
 export("termGenePairs")
