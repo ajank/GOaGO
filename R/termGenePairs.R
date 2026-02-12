@@ -30,7 +30,7 @@ termGenePairs <- function(object, OrgDb = NULL) {
     if (!is.null(OrgDb)) {
         geneIDs <- unique(with(gp, c(geneID1, geneID2)))
         # suppress the message on 1:1 mapping between keys and columns
-        suppressMessages(geneSymbols <- AnnotationDbi::mapIds(OrgDb, geneIDs,
+        suppressMessages(geneSymbols <- mapIds(OrgDb, geneIDs,
             column = "SYMBOL", keytype = object@keyType
         ))
 

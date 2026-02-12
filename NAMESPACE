@@ -11,6 +11,7 @@ exportMethods("as.data.table")
 exportMethods("organism")
 exportMethods("show")
 
+importFrom("AnnotationDbi", "mapIds", "species")
 importFrom("BiocGenerics", "as.data.frame", "organism")
 importFrom("BiocParallel", "bplapply")
 importFrom("clusterProfiler", "enrichGO")

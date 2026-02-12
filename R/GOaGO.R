@@ -319,7 +319,7 @@ GOaGO <- function(
         numPermutations = numPermutations,
         minGSSize = minGSSize,
         maxGSSize = maxGSSize,
-        organism = AnnotationDbi::species(OrgDb),
+        organism = species(OrgDb),
         ontology = ont,
         keyType = keyType,
         genePairs = genePairs,
