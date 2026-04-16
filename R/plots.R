@@ -4,8 +4,8 @@
 # number of terms (or the terms themselves) specified by `showCategory`.
 .sortedResult <- function(
     object,
-    minTermPairs = 5,
-    showCategory = 10,
+    minTermPairs = Inf,
+    showCategory = Inf,
     orderBy = "FoldEnrichment",
     decreasing = TRUE
 ) {
