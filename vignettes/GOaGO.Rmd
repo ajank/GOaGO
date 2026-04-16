@@ -240,6 +240,7 @@ ggplot(
     geom_vline(xintercept = 0, lty = 2) +
     geom_hline(yintercept = 0, lty = 2) +
     geom_point(alpha = 0.3) +
+    scale_size_area() +
     scale_color_manual("Term enrichment", labels = col_labels, values = col_values) +
     DOSE::theme_dose(12)
 ```
@@ -258,6 +259,7 @@ ggplot(
     geom_vline(xintercept = 0, lty = 2) +
     geom_point(alpha = 0.3) +
     geom_text_repel(aes(label = label_wrap_gen(50)(Description)), show.legend = FALSE, size = 3, lineheight = 0.9) +
+    scale_size_area() +
     scale_color_manual("Term enrichment", labels = col_labels, values = col_values) +
     DOSE::theme_dose(12)
 ```

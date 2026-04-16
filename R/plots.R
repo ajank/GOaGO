@@ -110,6 +110,12 @@ DotPlot <- function(
         scale_y_discrete(labels = label_func) +
         theme_dose(font.size)
 
+    if (size == "Count")
+        # ensure that a value of 0 is mapped to a size of 0
+        p <- p + scale_size_area(max_size = 8)
+    else
+        p <- p + scale_size(range = c(3, 8))
+
     return(p)
 }
 
