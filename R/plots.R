@@ -101,10 +101,10 @@ DotPlot <- function(
     p <- ggplot(
         dt, aes(
             x = .data[[x]], y = Description, size = .data[[size]],
-            color = .data[[color]]
+            fill = .data[[color]]
         )
     ) +
-        geom_point() +
+        geom_point(shape = 21) +
         labs(y = NULL) +
         scale_x_continuous(expand = expansion(mult = 0.1)) +
         scale_y_discrete(labels = label_func) +
