@@ -1,10 +1,10 @@
 # Internal function to select only the terms that are associated to at least
-# `minTermPairs` gene pairs, and convert the terms (both `ID` and `Description`
+# `minCount` gene pairs, and convert the terms (both `ID` and `Description`
 # columns) to factors ordered by the column `orderBy`. Finally, select only the
 # number of terms (or the terms themselves) specified by `showCategory`.
 .sortedResult <- function(
     object,
-    minTermPairs = Inf,
+    minCount = Inf,
     showCategory = Inf,
     orderBy = "FoldEnrichment",
     decreasing = TRUE
@@ -13,7 +13,7 @@
     Count <- ID <- Description <- NULL
 
     dt <- as.data.table(object)
-    dt <- dt[Count >= minTermPairs, ]
+    dt <- dt[Count >= minCount, ]
 
     if (!orderBy %in% colnames(dt)) {
         message("wrong orderBy argument: ", orderBy)
@@ -55,8 +55,8 @@
 ##' term, and point color -- the adjusted p-value.
 ##'
 ##' @param object GO-a-GO results of class \code{GOaGO-result}
-##' @param minTermPairs plot only the GO terms that are associated to at least
-##'   the given number of gene pairs
+##' @param minCount plot only the GO terms that are associated to at least the
+##'   given number of gene pairs
 ##' @param x Variable for X-axis, one of \code{"FoldEnrichment"},
 ##'   \code{"PairRatio"} and \code{"Count"}.
 ##' @param color Variable used to color enriched terms, e.g. \code{"pvalue"},
@@ -84,7 +84,7 @@
 ##' DotPlot(goago)
 DotPlot <- function(
     object,
-    minTermPairs = 5,
+    minCount = 5,
     x = "FoldEnrichment",
     color = "p.adjust",
     size = "Count",
@@ -98,8 +98,8 @@ DotPlot <- function(
     Description <- NULL
 
     dt <- .sortedResult(object,
-        minTermPairs = minTermPairs,
-        showCategory = showCategory, orderBy = orderBy, decreasing = decreasing
+        minCount = minCount, showCategory = showCategory, orderBy = orderBy,
+        decreasing = decreasing
     )
 
     label_func <- .label_format(label_format)
@@ -133,8 +133,8 @@ DotPlot <- function(
 ##' each enriched Gene Ontology term, obtained for the randomized gene pairs.
 ##'
 ##' @param object GO-a-GO results of class \code{GOaGO-result}
-##' @param minTermPairs plot only the GO terms that are associated to at least
-##'   the given number of gene pairs
+##' @param minCount plot only the GO terms that are associated to at least the
+##'   given number of gene pairs
 ##' @param showCategory number of terms to display or a vector of terms
 ##' @param orderBy The order of the Y-axis, one of \code{"FoldEnrichment"},
 ##'   \code{"PairRatio"} and \code{"Count"}.
@@ -156,7 +156,7 @@ DotPlot <- function(
 ##' RidgePlot(goago)
 RidgePlot <- function(
     object,
-    minTermPairs = 5,
+    minCount = 5,
     showCategory = 10,
     orderBy = "FoldEnrichment",
     decreasing = TRUE,
@@ -167,8 +167,8 @@ RidgePlot <- function(
     Count <- Description <- NULL
 
     dt <- .sortedResult(object,
-        minTermPairs = minTermPairs,
-        showCategory = showCategory, orderBy = orderBy, decreasing = decreasing
+        minCount = minCount, showCategory = showCategory, orderBy = orderBy,
+        decreasing = decreasing
     )
 
     dt_permuted <- merge(dt[, c("ID", "Description")],

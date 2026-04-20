@@ -10,8 +10,8 @@
 ##' @slot pvalueCutoff adjusted p-value cutoff on enrichment tests
 ##' @slot pAdjustMethod p-value adjustment method
 ##' @slot qvalueCutoff q-value cutoff on enrichment tests
-##' @slot minTermPairs cutoff for number of pairs that share a GO term for this
-##'   term to be considered
+##' @slot minCount cutoff for number of pairs that share a GO term for this term
+##'   to be considered
 ##' @slot numPermutations number of permutations performed in the enrichment
 ##'   test
 ##' @slot minGSSize minimal size of genes annotated for testing
@@ -36,7 +36,7 @@ setClass("GOaGO-result",
         pvalueCutoff    = "numeric",
         pAdjustMethod   = "character",
         qvalueCutoff    = "numeric",
-        minTermPairs    = "numeric",
+        minCount        = "numeric",
         numPermutations = "numeric",
         minGSSize       = "numeric",
         maxGSSize       = "numeric",
@@ -118,7 +118,7 @@ uniqueGenePairs <- function(genePairs) {
 ##' @param OrgDb OrgDb
 ##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
 ##' @param ont one of "BP", "MF", and "CC" subontologies, or "ALL" for all three
-##' @param minTermPairs cutoff for number of pairs that share a GO term for this
+##' @param minCount cutoff for number of pairs that share a GO term for this
 ##'   term to be considered
 ##' @param numPermutations number of permutations performed in the enrichment
 ##'   test
@@ -145,7 +145,7 @@ uniqueGenePairs <- function(genePairs) {
 ##' show(goago)
 GOaGO <- function(
     genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
-    minTermPairs = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,
+    minCount = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,
     pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
 ) {
     # prevent "no visible binding for global variable" NOTEs in R CMD check
@@ -238,9 +238,8 @@ GOaGO <- function(
 
     pairCountsPerTerm <- countGenePairsPerTerm(genePairsMatrix, geneTermMatrix)
 
-    # take only the GO terms that are associated to at least minTermPairs gene
-    # pairs
-    sel <- which(pairCountsPerTerm >= minTermPairs)
+    # take only the GO terms that are associated to at least minCount gene pairs
+    sel <- which(pairCountsPerTerm >= minCount)
     ID_universe_reduced <- ID_universe[sel]
     pairCountsPerTerm_reduced <- pairCountsPerTerm[sel]
     geneTermMatrix_reduced <- geneTermMatrix[, sel, drop = FALSE]
@@ -321,7 +320,7 @@ GOaGO <- function(
         pvalueCutoff = pvalueCutoff,
         pAdjustMethod = pAdjustMethod,
         qvalueCutoff = qvalueCutoff,
-        minTermPairs = minTermPairs,
+        minCount = minCount,
         numPermutations = numPermutations,
         minGSSize = minGSSize,
         maxGSSize = maxGSSize,

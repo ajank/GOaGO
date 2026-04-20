@@ -130,8 +130,8 @@ DotPlot(goago)
 <img src="man/figures/README-dotplot-1.png" width="100%" />
 
 Note that by default only the terms associated with at least 5 gene
-pairs are shown; you can change this by setting `minTermPairs` to any
-other value.
+pairs are shown; you can change this by setting `minCount` to any other
+value.
 
 We can also see the sampling distributions of numbers of gene pairs
 sharing each GO term, obtained for the randomized gene pairs. From these

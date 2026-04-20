@@ -24,8 +24,8 @@ term), \code{FoldEnrichment} (quotient of the two fractions),
 
 \item{\code{qvalueCutoff}}{q-value cutoff on enrichment tests}
 
-\item{\code{minTermPairs}}{cutoff for number of pairs that share a GO term for this
-term to be considered}
+\item{\code{minCount}}{cutoff for number of pairs that share a GO term for this term
+to be considered}
 
 \item{\code{numPermutations}}{number of permutations performed in the enrichment
 test}

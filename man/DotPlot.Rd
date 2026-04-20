@@ -6,7 +6,7 @@
 \usage{
 DotPlot(
   object,
-  minTermPairs = 5,
+  minCount = 5,
   x = "FoldEnrichment",
   color = "p.adjust",
   size = "Count",
@@ -20,8 +20,8 @@ DotPlot(
 \arguments{
 \item{object}{GO-a-GO results of class \code{GOaGO-result}}
 
-\item{minTermPairs}{plot only the GO terms that are associated to at least
-the given number of gene pairs}
+\item{minCount}{plot only the GO terms that are associated to at least the
+given number of gene pairs}
 
 \item{x}{Variable for X-axis, one of \code{"FoldEnrichment"},
 \code{"PairRatio"} and \code{"Count"}.}

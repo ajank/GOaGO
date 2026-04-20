@@ -36,8 +36,8 @@ setMethod(
         ))
         cat(sprintf(
             "#...identified GO terms shared by at least %d %s\n",
-            object@minTermPairs,
-            ifelse(object@minTermPairs == 1, "gene pair", "gene pairs")
+            object@minCount,
+            ifelse(object@minCount == 1, "gene pair", "gene pairs")
         ))
         cat(sprintf(
             "#...p-values adjusted by '%s' with cutoff < %s\n",

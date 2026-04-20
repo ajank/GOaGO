@@ -6,7 +6,7 @@
 \usage{
 RidgePlot(
   object,
-  minTermPairs = 5,
+  minCount = 5,
   showCategory = 10,
   orderBy = "FoldEnrichment",
   decreasing = TRUE,
@@ -17,8 +17,8 @@ RidgePlot(
 \arguments{
 \item{object}{GO-a-GO results of class \code{GOaGO-result}}
 
-\item{minTermPairs}{plot only the GO terms that are associated to at least
-the given number of gene pairs}
+\item{minCount}{plot only the GO terms that are associated to at least the
+given number of gene pairs}
 
 \item{showCategory}{number of terms to display or a vector of terms}
 
