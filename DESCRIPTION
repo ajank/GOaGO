@@ -13,6 +13,7 @@ Description: GO-a-GO annotates Gene Ontology terms that are enriched in a given
     but the gene identities (including the associated terms) are permuted.
 License: GPL (>= 3)
 Encoding: UTF-8
+LazyData: false
 Imports:
     AnnotationDbi,
     BiocGenerics,
