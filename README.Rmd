@@ -50,9 +50,10 @@ head(genePairsGM12878)
 
 The column names ending with `1` and `2` refer to the first and second loop
 anchors, respectively. The essential columns are: `geneID1` and `geneID2` (gene
-identifiers from a database of choice) and `loopID` (identifier of a chromatin
-loop). As some loop anchors overlapped multiple Transcription Start Sites,
-possibly of many genes, for these loops the dataset contains all combinations.
+identifiers from a database of choice) and `interactionID` (identifier of a
+chromatin loop). As some loop anchors overlapped multiple Transcription Start
+Sites, possibly of many genes, for these loops the dataset contains all
+combinations.
 
 When running GO-a-GO, we should specify that gene identifiers are from the
 Entrez database, and use the Bioconductor `org.Hs.eg.db` package as the source

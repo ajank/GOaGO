@@ -8,20 +8,18 @@
 ##' yielding a total of 2,339 gene pairs, of which 1,743 pairs are unique and do
 ##' not contain the same gene twice.
 ##'
-##' @format A data frame with 2,339 rows and 15 columns:
+##' @format A data frame with 2,339 rows and 13 columns:
 ##' \describe{
-##'   \item{loopID}{loop identifier}
+##'   \item{interactionID}{loop identifier}
 ##'   \item{chrom1}{chromosome of loop anchor 1}
 ##'   \item{start1}{start coordinate of loop anchor 1}
 ##'   \item{end1}{end coordinate of loop anchor 1}
-##'   \item{centroid1}{centroid of loop anchor 1}
 ##'   \item{geneID1}{Entrez identifier of the gene associated to loop anchor 1}
 ##'   \item{tss1}{TSS coordinate of the associated gene}
 ##'   \item{strand1}{strand (\code{"+"} or \code{"-"}) of the associated gene}
 ##'   \item{chrom2}{chromosome of loop anchor 2}
 ##'   \item{start2}{start coordinate of loop anchor 2}
 ##'   \item{end2}{end coordinate of loop anchor 2}
-##'   \item{centroid2}{centroid of loop anchor 2}
 ##'   \item{geneID2}{Entrez identifier of the gene associated to loop anchor 2}
 ##'   \item{tss2}{TSS coordinate of the associated gene}
 ##'   \item{strand2}{strand (\code{"+"} or \code{"-"}) of the associated gene.}

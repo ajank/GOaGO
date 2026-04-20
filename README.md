@@ -37,30 +37,30 @@ library(GOaGO)
 
 data("genePairsGM12878")
 head(genePairsGM12878)
-#>    loopID chrom1    start1      end1 centroid1 geneID1      tss1 strand1 chrom2
-#>     <int> <char>     <int>     <int>     <int>  <char>     <int>  <char> <char>
-#> 1:      3  chr10 101190000 101195000 101195833    2805 101190530       -  chr10
-#> 2:      7  chr10 102100000 102110000 102100714    6319 102106772       +  chr10
-#> 3:      7  chr10 102100000 102110000 102100714    6319 102106772       +  chr10
-#> 4:     10  chr10 102810000 102815000 102803750   81621 102820999       +  chr10
-#> 5:     19  chr10 103600000 103605000 103598750   30819 103603677       -  chr10
-#> 6:     23  chr10 103985000 103990000 103987500   83401 103986143       +  chr10
-#>       start2      end2 centroid2 geneID2      tss2 strand2
-#>        <int>     <int>     <int>  <char>     <int>  <char>
-#> 1: 101370000 101375000 101373333   81894 101372701       -
-#> 2: 102270000 102280000 102277857   25956 102276754       -
-#> 3: 102270000 102280000 102277857   25956 102279595       -
-#> 4: 102900000 102905000 102903750    3195 102891061       +
-#> 5: 103830000 103835000 103831250   79803 103825124       +
-#> 6: 104160000 104165000 104162500    5662 104169041       -
+#>    interactionID chrom1    start1      end1 geneID1      tss1 strand1 chrom2
+#>            <int> <char>     <int>     <int>  <char>     <int>  <char> <char>
+#> 1:             3  chr10 101190001 101195000    2805 101190530       -  chr10
+#> 2:             7  chr10 102100001 102110000    6319 102106772       +  chr10
+#> 3:             7  chr10 102100001 102110000    6319 102106772       +  chr10
+#> 4:            10  chr10 102810001 102815000   81621 102820999       +  chr10
+#> 5:            19  chr10 103600001 103605000   30819 103603677       -  chr10
+#> 6:            23  chr10 103985001 103990000   83401 103986143       +  chr10
+#>       start2      end2 geneID2      tss2 strand2
+#>        <int>     <int>  <char>     <int>  <char>
+#> 1: 101370001 101375000   81894 101372701       -
+#> 2: 102270001 102280000   25956 102276754       -
+#> 3: 102270001 102280000   25956 102279595       -
+#> 4: 102900001 102905000    3195 102891061       +
+#> 5: 103830001 103835000   79803 103825124       +
+#> 6: 104160001 104165000    5662 104169041       -
 ```
 
 The column names ending with `1` and `2` refer to the first and second
 loop anchors, respectively. The essential columns are: `geneID1` and
-`geneID2` (gene identifiers from a database of choice) and `loopID`
-(identifier of a chromatin loop). As some loop anchors overlapped
-multiple Transcription Start Sites, possibly of many genes, for these
-loops the dataset contains all combinations.
+`geneID2` (gene identifiers from a database of choice) and
+`interactionID` (identifier of a chromatin loop). As some loop anchors
+overlapped multiple Transcription Start Sites, possibly of many genes,
+for these loops the dataset contains all combinations.
 
 When running GO-a-GO, we should specify that gene identifiers are from
 the Entrez database, and use the Bioconductor `org.Hs.eg.db` package as

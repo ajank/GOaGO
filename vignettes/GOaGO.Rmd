@@ -76,7 +76,7 @@ head(genePairsGM12878)
 ```
 
 The column names ending with `1` and `2` refer to the first and second loop anchors, respectively.
-The essential columns are: `geneID1` and `geneID2` (gene identifiers from the Entrez database) and `loopID` (identifier of a chromatin loop).
+The essential columns are: `geneID1` and `geneID2` (gene identifiers from the Entrez database) and `interactionID` (identifier of a chromatin loop).
 Of the 9,448 chromatin loops in the original study, 1,581 overlapped at least one gene Transcription Start Site (TSS) at both loop anchors.
 As some loop anchors overlapped multiple TSSes, possibly of different genes, the dataset contains all combinations for these loops, yielding a total of 2,339 gene pairs:
 
@@ -289,7 +289,7 @@ The enrichment observed above suggests that some contacts within olfactory recep
 We can calculate the number of chromatin loops from the original study that overlapped at least one gene TSS at both loop anchors (should be 1,581):
 
 ```{r num_loops_with_genes}
-length(unique(genePairsGM12878$loopID))
+length(unique(genePairsGM12878$interactionID))
 ```
 
 and the number of input gene pairs that are unique and do not contain the same gene twice (should be 1,743):
