@@ -41,8 +41,7 @@ are found in the `genePairs` argument", {
 #'
 #' @returns A data frame with columns \code{geneID1} and \code{geneID2}.
 simulate_gene_pairs <- function(
-      OrgDb, term1, term2, num_term1_pairs, num_term2_pairs,
-      keyType = "ENTREZID"
+    OrgDb, term1, term2, num_term1_pairs, num_term2_pairs, keyType = "ENTREZID"
 ) {
     results1 <- AnnotationDbi::select(OrgDb, keys = term1, columns = c(keyType), keytype = "GOALL")
     results2 <- AnnotationDbi::select(OrgDb, keys = term2, columns = c(keyType), keytype = "GOALL")
