@@ -65,6 +65,9 @@ setClass("GOaGO-result",
 ##'   alert you. If column \code{pairID} was not provided in \code{genePairs},
 ##'   an integer vector equal to \code{seq_len(nrow(result))} will be used.
 uniqueGenePairs <- function(genePairs) {
+    # prevent "no visible binding for global variable" NOTEs in R CMD check
+    geneID1 <- geneID2 <- gid1 <- gid2 <- pairID <- NULL
+
     # ensure that gene identifiers are provided in the input data
     stopifnot("geneID1" %in% colnames(genePairs))
     stopifnot("geneID2" %in% colnames(genePairs))
@@ -145,6 +148,9 @@ GOaGO <- function(
     minTermPairs = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,
     pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
 ) {
+    # prevent "no visible binding for global variable" NOTEs in R CMD check
+    geneID <- ID <- FoldEnrichment <- PairRatio <- BgRatio <- pvalue <- NULL
+
     # extract unique gene pairs from the data frame provided
     genePairs <- uniqueGenePairs(genePairs)
     # ensure that gene identifiers are character vectors
@@ -256,7 +262,7 @@ GOaGO <- function(
     # aggregate the results of permutation testing
     cols <- intersect(c("ONTOLOGY", "ID", "Description"), colnames(egoResult))
     result <- cbind(
-        egoResult[sel, ..cols],
+        egoResult[sel, cols, with = FALSE],
         Count = pairCountsPerTerm_reduced,
         PairRatio = pairCountsPerTerm_reduced / nrow(genePairsMatrix),
         BgRatio = rowMeans(permutedPairCountsPerTerm_reduced) /

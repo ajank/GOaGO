@@ -9,6 +9,9 @@
     orderBy = "FoldEnrichment",
     decreasing = TRUE
 ) {
+    # prevent "no visible binding for global variable" NOTEs in R CMD check
+    Count <- ID <- Description <- NULL
+
     dt <- as.data.table(object)
     dt <- dt[Count >= minTermPairs, ]
 
@@ -91,6 +94,9 @@ DotPlot <- function(
     font.size = 12,
     label_format = 50
 ) {
+    # prevent "no visible binding for global variable" NOTEs in R CMD check
+    Description <- NULL
+
     dt <- .sortedResult(object,
         minTermPairs = minTermPairs,
         showCategory = showCategory, orderBy = orderBy, decreasing = decreasing
@@ -156,6 +162,9 @@ RidgePlot <- function(
     font.size = 12,
     label_format = 50
 ) {
+    # prevent "no visible binding for global variable" NOTEs in R CMD check
+    Count <- Description <- NULL
+
     dt <- .sortedResult(object,
         minTermPairs = minTermPairs,
         showCategory = showCategory, orderBy = orderBy, decreasing = decreasing
