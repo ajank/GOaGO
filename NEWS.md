@@ -1,3 +1,8 @@
+# GOaGO 0.99.4
+
+* `keyType` argument of `GOaGO()` is now optional. If not provided, `keyType`
+  attribute of `genePairs`, as set by `annotateInteractions()`, is used instead.
+
 # GOaGO 0.99.3
 
 * New function `annotateInteractions()` to extract gene pairs from paired
