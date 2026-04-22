@@ -21,11 +21,14 @@ Imports:
     clusterProfiler,
     data.table,
     DOSE,
+    GenomeInfoDb,
+    GenomicRanges,
     ggplot2,
     ggridges,
     Matrix,
-    qvalue
-Depends: 
+    qvalue,
+    S4Vectors
+Depends:
     R (>= 4.4.0),
     methods
 biocViews: GO, GeneSetEnrichment
@@ -34,10 +37,13 @@ BugReports: https://github.com/ajank/GOaGO/issues
 RoxygenNote: 7.3.3
 Suggests:
     BiocStyle,
+    GenomicInteractions,
     ggrepel,
     knitr,
     org.Hs.eg.db,
     rmarkdown,
-    testthat
+    rtracklayer,
+    testthat,
+    TxDb.Hsapiens.UCSC.hg19.knownGene
 Config/testthat/edition: 3
 VignetteBuilder: knitr

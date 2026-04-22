@@ -1,4 +1,7 @@
 export("GOaGO")
+export("annotateAnchors")
+export("annotateInteractions")
+export("convertTranscriptsToTSS")
 export("DotPlot")
 export("genePairs")
 export("keyType")
@@ -12,12 +15,15 @@ exportMethods("organism")
 exportMethods("show")
 
 importFrom("AnnotationDbi", "mapIds", "species")
-importFrom("BiocGenerics", "as.data.frame", "organism")
+importFrom("BiocGenerics", "as.data.frame", "end", "organism", "start",
+    "strand", "width")
 importFrom("BiocParallel", "bplapply")
 importFrom("clusterProfiler", "enrichGO")
 importFrom("data.table", ".I", ":=", "as.data.table", "data.table", "dcast",
-    "setcolorder", "setnafill")
+    "setcolorder", "setkey", "setnafill")
 importFrom("DOSE", "theme_dose")
+importFrom("GenomeInfoDb", "seqinfo", "seqnames")
+importFrom("GenomicRanges", "distance", "GRanges", "nearest", "resize")
 importFrom("ggplot2", ".data", "aes", "element_text", "expansion", "geom_point",
     "ggplot", "label_wrap_gen", "labs", "scale_color_manual",
     "scale_fill_manual", "scale_size", "scale_size_area", "scale_x_continuous",
@@ -26,5 +32,7 @@ importFrom("ggridges", "geom_density_ridges")
 importFrom("Matrix", "Matrix", "colSums", "which")
 importFrom("methods", "new", "show")
 importFrom("qvalue", "qvalue")
+importFrom("S4Vectors", "mcols", "mcols<-", "metadata", "queryHits",
+    "subjectHits")
 importFrom("stats", "p.adjust")
 importFrom("utils", "head", "str")
