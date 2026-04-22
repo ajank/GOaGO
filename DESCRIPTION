@@ -11,7 +11,7 @@ Description: GO-a-GO annotates Gene Ontology terms that are enriched in a given
     Such gene pairs are counted for the original set of gene pairs and compared
     against randomized sets in which the structure of the pairs is preserved,
     but the gene identities (including the associated terms) are permuted.
-License: GPL (>= 3)
+License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
 Imports:
