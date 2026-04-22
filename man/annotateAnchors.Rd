@@ -21,7 +21,7 @@ annotateAnchors(
 \code{\link{convertTranscriptsToTSS}}}
 
 \item{keyType}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL", if
-it cannot be determined from metadata of \code{transcripts} or \code{tss}.}
+it cannot be determined from metadata of \code{transcripts} or \code{tss}}
 
 \item{maxDistanceToTSS}{maximal distance to extend the search for nearest
 TSS outside the anchor}
