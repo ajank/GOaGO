@@ -77,6 +77,8 @@ head(genePairsGM12878)
 
 The column names ending with `1` and `2` refer to the first and second loop anchors, respectively.
 The essential columns are: `geneID1` and `geneID2` (gene identifiers from the Entrez database) and `interactionID` (identifier of a chromatin loop).
+See the section [Extracting gene pairs from paired genomic regions] for how these gene pairs were obtained.
+
 Of the 9,448 chromatin loops in the original study, 1,581 overlapped at least one gene Transcription Start Site (TSS) at both loop anchors.
 As some loop anchors overlapped multiple TSSes, possibly of different genes, the dataset contains all combinations for these loops, yielding a total of 2,339 gene pairs:
 
@@ -303,6 +305,48 @@ Further information is also reported by the method `show`, implicitly used here:
 ```{r show}
 goago
 ```
+
+
+# Extracting gene pairs from paired genomic regions
+
+We started this vignette with an example dataset of gene pairs.
+These pairs are often defined by a set of chromatin interactions, such as chromatin loops (as it is the case here), differential contacts or spatial gene clusters.
+What these scenarios have in common is that the underlying genomic regions need to be annotated to obtain gene pairs.
+
+We will use the Bioconductor package `r Biocpkg("rtracklayer")` to read a file in [BEDPE format](https://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) containing genomic coordinates of the 9,448 chromatin loops discussed before:
+
+```{r import-bedpe, message = FALSE}
+fpath <- system.file("extdata", "GM12878_loops.bedpe.gz", package = "GOaGO")
+pairs <- rtracklayer::import(fpath, genome = "hg19")
+pairs
+```
+
+The `first` and `second` genomic regions shown above correspond to the first and second loop anchors.
+These paired regions will be further associated to relevant genes.
+We will use transcript database from the annotation package `r Biocpkg("TxDb.Hsapiens.UCSC.hg19.knownGene")`.
+For more informative associations we will take only the transcripts of protein-coding genes.
+This can be done by applying a filter that ensures that the coding DNA sequence (CDS) strand is `"-"` or `"+"`, i.e. not `NA`:
+
+```{r transcripts, message = FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+transcripts <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene,
+    columns = "gene_id", filter = list(cds_strand = c("-", "+"))
+)
+```
+
+From these transcripts, only the Transcription Start Site (TSS) position will be used for annotation.
+Each genomic region (loop anchor) will be associated to all the TSSes it overlaps.
+If there is no such overlap, the region will be associated to the closest TSS within 10 kb distance, if there are any.
+As some regions overlapped multiple TSSes, possibly of different genes, the resulting annotation contains all the combinations:
+
+```{r annotateInteractions}
+annotateInteractions(pairs, transcripts, maxDistanceToTSS = 10e3)
+```
+
+We obtain the same result as provided in the dataset `genePairsGM12878`.
+
+For further manipulation of paired genomic regions, and specifically chromatin contacts, Bioconductor packages `r Biocpkg("GenomicInteractions")` and `r Biocpkg("mariner")` can be useful.
+In particular, the function `annotateInteractions` can take objects of class `GenomicInteractions`.
 
 
 # Citing GO-a-GO
