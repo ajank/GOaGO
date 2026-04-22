@@ -340,10 +340,18 @@ If there is no such overlap, the region will be associated to the closest TSS wi
 As some regions overlapped multiple TSSes, possibly of different genes, the resulting annotation contains all the combinations:
 
 ```{r annotateInteractions}
-annotateInteractions(pairs, transcripts, maxDistanceToTSS = 10e3)
+genePairs <- annotateInteractions(pairs, transcripts, maxDistanceToTSS = 10e3)
+genePairs
 ```
 
 We obtain the same result as provided in the dataset `genePairsGM12878`.
+Note that the information on `keyType` is extracted from `transcripts` and propagated to gene pairs:
+
+```{r attr-keyType}
+attr(genePairs, "keyType")
+```
+
+so that we do not need to specify `keyType` when running `GOaGO` function on this object.
 
 For further manipulation of paired genomic regions, and specifically chromatin contacts, Bioconductor packages `r Biocpkg("GenomicInteractions")` and `r Biocpkg("mariner")` can be useful.
 In particular, the function `annotateInteractions` can take objects of class `GenomicInteractions`.

@@ -7,7 +7,7 @@
 GOaGO(
   genePairs,
   OrgDb,
-  keyType = "ENTREZID",
+  keyType = NULL,
   ont = "MF",
   minCount = 1,
   numPermutations = 10000,
@@ -26,7 +26,8 @@ provided.}
 
 \item{OrgDb}{OrgDb}
 
-\item{keyType}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL"}
+\item{keyType}{type of gene identifiers, such as "ENTREZID" or "ENSEMBL", if
+it cannot be determined from metadata of \code{genePairs}}
 
 \item{ont}{one of "BP", "MF", and "CC" subontologies, or "ALL" for all three}
 

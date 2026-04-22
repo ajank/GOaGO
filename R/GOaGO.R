@@ -116,7 +116,8 @@ uniqueGenePairs <- function(genePairs) {
 ##'   containing gene identifiers; column \code{pairID} will also be used if
 ##'   provided.
 ##' @param OrgDb OrgDb
-##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
+##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL", if
+##'   it cannot be determined from metadata of \code{genePairs}
 ##' @param ont one of "BP", "MF", and "CC" subontologies, or "ALL" for all three
 ##' @param minCount cutoff for number of pairs that share a GO term for this
 ##'   term to be considered
@@ -144,7 +145,7 @@ uniqueGenePairs <- function(genePairs) {
 ##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' show(goago)
 GOaGO <- function(
-    genePairs, OrgDb, keyType = "ENTREZID", ont = "MF",
+    genePairs, OrgDb, keyType = NULL, ont = "MF",
     minCount = 1, numPermutations = 10000, universe, pvalueCutoff = 0.05,
     pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 10, maxGSSize = 500
 ) {
@@ -171,6 +172,17 @@ GOaGO <- function(
     }
     # remove duplicates from the universe
     universe <- unique(universe)
+
+    # use keyType if provided, otherwise try to determine it from genePairs
+    if (is.null(keyType)) {
+        keyType <- attr(genePairs, "keyType")
+        if (is.null(keyType)) {
+            stop(
+                "type of gene identifiers cannot be determined from metadata ",
+                "of `genePairs`, please provide it as `keyType` argument"
+            )
+        }
+    }
 
     # use enrichGO to fetch the information on gene-to-term associations
     ego <- enrichGO(
