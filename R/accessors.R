@@ -40,46 +40,6 @@ setMethod(
 )
 
 
-##' as.data.table method for \code{GOaGO-result} instance
-##'
-##' @name as.data.table
-##' @aliases as.data.table,GOaGO-result-method
-##' @docType methods
-##' @rdname as.data.table-methods
-##'
-##' @title as.data.table method
-##' @usage as.data.table(x, keep.rownames=FALSE, ...)
-##' @param x A \code{GOaGO-result} instance to coerce.
-##' @param keep.rownames,... Not used. They are inherited from
-##'   \code{data.table::as.data.table()}.
-##' @returns A data table of the enriched Gene Ontology terms, with the
-##'   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of
-##'   the GO term), \code{Count} (number of input gene pairs sharing the given
-##'   term), \code{PairRatio} (fraction of input gene pairs sharing the given
-##'   term), \code{BgRatio} (fraction of permuted gene pairs sharing the given
-##'   term), \code{FoldEnrichment} (quotient of the two fractions),
-##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
-##' @examples
-##' library(org.Hs.eg.db)
-##' data("genePairsGM12878")
-##'
-##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
-##' goago <- GOaGO(genePairsSubset, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
-##' as.data.table(goago)
-`.as.data.table.GOaGO-result` <- function(x, ...) {
-    data.table(x@result, ...)
-}
-
-setAs("GOaGO-result", "data.table", function(from) {
-    `.as.data.table.GOaGO-result`(from)
-})
-
-setMethod(
-    "as.data.table", signature(x = "GOaGO-result"),
-    `.as.data.table.GOaGO-result`
-)
-
-
 ## Accessors
 
 ##' Key type accessor for \code{GOaGO-result} instance
