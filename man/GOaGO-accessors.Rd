@@ -40,8 +40,7 @@ Accessors and show method for \code{GOaGO-result} objects
 library(org.Hs.eg.db)
 data("genePairsGM12878")
 
-genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
-goago <- GOaGO(genePairsSubset, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
+goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 show(goago)
 
 genePairs(goago)
