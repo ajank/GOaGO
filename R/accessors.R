@@ -42,58 +42,51 @@ setMethod(
 
 ## Accessors
 
-##' Key type accessor for \code{GOaGO-result} instance
+##' Accessors and show method for \code{GOaGO-result} objects
 ##'
+##' @name GOaGO-accessors
 ##' @param object of class \code{GOaGO-result}
-##' @returns type of gene identifiers, such as "ENTREZID" or "ENSEMBL"
-##' @export
+##' @returns
+##' \code{genePairs} returns a data frame with the input gene pairs, with the
+##' columns \code{geneID1}, \code{geneID2} and \code{pairID}.
+##'
+##' \code{keyType} returns the type of gene identifiers, such as "ENTREZID" or
+##' "ENSEMBL".
+##'
+##' \code{organism} returns the scientific name (i.e. genus and species, or
+##' genus and species and subspecies) of the organism.
+##'
+##' \code{show} displays the object, and returns an invisible \code{NULL}.
 ##' @examples
 ##' library(org.Hs.eg.db)
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
 ##' goago <- GOaGO(genePairsSubset, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
-##' keyType(goago)
-keyType <- function(object) {
-    object@keyType
-}
-
-##' Gene pairs accessor for \code{GOaGO-result} instance
+##' show(goago)
 ##'
-##' @param object of class \code{GOaGO-result}
-##' @returns A data frame with the input gene pairs, with the columns
-##'   \code{geneID1}, \code{geneID2} and \code{pairID}.
-##' @export
-##' @examples
-##' library(org.Hs.eg.db)
-##' data("genePairsGM12878")
-##'
-##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
-##' goago <- GOaGO(genePairsSubset, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
 ##' genePairs(goago)
+##' keyType(goago)
+##' organism(goago)
+NULL
+
+##' @rdname GOaGO-accessors
+##' @export
 genePairs <- function(object) {
     object@genePairs
 }
 
-##' organism method for \code{GOaGO-result} instance
-##'
+##' @rdname GOaGO-accessors
+##' @export
+keyType <- function(object) {
+    object@keyType
+}
+
 ##' @name organism
 ##' @aliases organism,GOaGO-result-method
-##' @docType methods
-##' @rdname organism-methods
-##'
-##' @title organism method
-##' @param object A \code{GOaGO-result} instance.
-##' @returns scientific name (i.e. genus and species, or genus and species and
-##'   subspecies) of the organism
+##' @rdname GOaGO-accessors
 ##' @usage organism(object)
-##' @examples
-##' library(org.Hs.eg.db)
-##' data("genePairsGM12878")
-##'
-##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
-##' goago <- GOaGO(genePairsSubset, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
-##' organism(goago)
+##' @export
 setMethod(
     "organism", signature(object = "GOaGO-result"),
     function(object) {
