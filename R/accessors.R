@@ -1,4 +1,4 @@
-## Coercion methods
+## Coercion to a data frame
 
 `as.data.frame.GOaGO-result` <- function(x, ...) {
     data.frame(x@result, ...)
@@ -8,17 +8,16 @@ setAs("GOaGO-result", "data.frame", function(from) {
     `as.data.frame.GOaGO-result`(from)
 })
 
-##' as.data.frame method for \code{GOaGO-result} instance
+##' Coerce a \code{GOaGO-result} object to a data frame
 ##'
 ##' @name as.data.frame
 ##' @aliases as.data.frame,GOaGO-result-method
 ##' @docType methods
 ##' @rdname as.data.frame-methods
 ##'
-##' @title as.data.frame method
 ##' @usage as.data.frame(x, row.names=NULL, optional=FALSE, ...)
-##' @param x A \code{GOaGO-result} instance to coerce.
-##' @param row.names,optional,... Not used. They are inherited from
+##' @param x The object to coerce.
+##' @param row.names,optional,... Not used, inherited from
 ##'   \code{base::as.data.frame()}.
 ##' @returns A data frame of the enriched Gene Ontology terms, with the
 ##'   following columns: \code{ONTOLOGY}, \code{ID}, \code{Description} (all of

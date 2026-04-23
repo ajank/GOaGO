@@ -55,7 +55,7 @@ p-values, (ii) \code{pvalueCutoff} on adjusted p-values, and (iii)
 \item{maxGSSize}{maximal size of genes annotated for testing}
 }
 \value{
-A \code{GOaGO-result} instance.
+A \code{GOaGO-result} object.
 }
 \description{
 Given a data frame of gene pairs, this function will return the enriched

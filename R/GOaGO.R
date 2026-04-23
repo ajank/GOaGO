@@ -134,7 +134,7 @@ uniqueGenePairs <- function(genePairs) {
 ##'   \code{qvalueCutoff} on q-values to be reported.
 ##' @param minGSSize minimal size of genes annotated for testing
 ##' @param maxGSSize maximal size of genes annotated for testing
-##' @returns A \code{GOaGO-result} instance.
+##' @returns A \code{GOaGO-result} object.
 ##' @seealso \code{\link{GOaGO-result-class}}
 ##' @export
 ##' @examples

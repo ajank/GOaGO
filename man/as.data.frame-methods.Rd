@@ -4,14 +4,14 @@
 \name{as.data.frame}
 \alias{as.data.frame}
 \alias{as.data.frame,GOaGO-result-method}
-\title{as.data.frame method}
+\title{Coerce a \code{GOaGO-result} object to a data frame}
 \usage{
 as.data.frame(x, row.names=NULL, optional=FALSE, ...)
 }
 \arguments{
-\item{x}{A \code{GOaGO-result} instance to coerce.}
+\item{x}{The object to coerce.}
 
-\item{row.names, optional, ...}{Not used. They are inherited from
+\item{row.names, optional, ...}{Not used, inherited from
 \code{base::as.data.frame()}.}
 }
 \value{
@@ -24,7 +24,7 @@ A data frame of the enriched Gene Ontology terms, with the
   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 }
 \description{
-as.data.frame method for \code{GOaGO-result} instance
+Coerce a \code{GOaGO-result} object to a data frame
 }
 \examples{
 library(org.Hs.eg.db)
