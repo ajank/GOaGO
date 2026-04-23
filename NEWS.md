@@ -1,3 +1,8 @@
+# GOaGO 0.99.5
+
+* `as.data.frame()` is also exported as an S3 method. Consequently, removing
+  `as.data.table()` method that has become redundant.
+
 # GOaGO 0.99.4
 
 * `keyType` argument of `GOaGO()` is now optional. If not provided, `keyType`
