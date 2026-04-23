@@ -1,11 +1,11 @@
 ## Coercion methods
 
-`.as.data.frame.GOaGO-result` <- function(x, ...) {
+`as.data.frame.GOaGO-result` <- function(x, ...) {
     data.frame(x@result, ...)
 }
 
 setAs("GOaGO-result", "data.frame", function(from) {
-    `.as.data.frame.GOaGO-result`(from)
+    `as.data.frame.GOaGO-result`(from)
 })
 
 ##' as.data.frame method for \code{GOaGO-result} instance
@@ -36,7 +36,7 @@ setAs("GOaGO-result", "data.frame", function(from) {
 ##' as.data.frame(goago)
 setMethod(
     "as.data.frame", signature(x = "GOaGO-result"),
-    `.as.data.frame.GOaGO-result`
+    `as.data.frame.GOaGO-result`
 )
 
 
