@@ -77,7 +77,6 @@
 ##' @export
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)
@@ -149,7 +148,6 @@ DotPlot <- function(
 ##' @export
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' goago <- GOaGO(genePairsGM12878, keyType = "ENTREZID", OrgDb = org.Hs.eg.db)

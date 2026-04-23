@@ -29,7 +29,6 @@ setAs("GOaGO-result", "data.frame", function(from) {
 ##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
@@ -62,7 +61,6 @@ setMethod(
 ##'   \code{pvalue}, \code{p.adjust}, \code{qvalue}.
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
@@ -91,7 +89,6 @@ setMethod(
 ##' @export
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
@@ -109,7 +106,6 @@ keyType <- function(object) {
 ##' @export
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
@@ -133,7 +129,6 @@ genePairs <- function(object) {
 ##' @usage organism(object)
 ##' @examples
 ##' library(org.Hs.eg.db)
-##' library("GOaGO")
 ##' data("genePairsGM12878")
 ##'
 ##' genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")

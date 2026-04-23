@@ -19,7 +19,6 @@ show method for \code{GOaGO-result} instance
 }
 \examples{
 library(org.Hs.eg.db)
-library("GOaGO")
 data("genePairsGM12878")
 
 genePairsSubset <- subset(genePairsGM12878, chrom1 == "chr11")
