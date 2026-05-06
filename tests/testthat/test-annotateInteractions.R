@@ -58,8 +58,8 @@ test_that("`convertTranscriptsToTSS` works as expected on synthetic data", {
 
 
 # synthetic anchors: the first one does not overlap a TSS, but is equidistant
-# to three; the second one overlaps a TSS
-sa <- GRanges("chr1", IRanges(c(31, 61), c(60, 90)))
+# to three; the second one overlaps a TSS; the third one is adjacent to a TSS
+sa <- GRanges("chr1", IRanges(c(31, 61, 71), c(60, 90, 100)))
 
 test_that("`annotateAnchors` works as expected on synthetic data", {
     dt <- data.table(
@@ -71,10 +71,11 @@ test_that("`annotateAnchors` works as expected on synthetic data", {
     expect_equal(annotateAnchors(sa, st, keyType = "ENTREZID"), dt)
 
     dt2 <- data.table(
-        interactionID = c(1, 1, 1, 2), chrom = "chr1",
-        start = c(31, 31, 31, 61), end = c(60, 60, 60, 90),
-        geneID = c("A", "B", "C", "C"), tss = c(21, 21, 70, 70),
-        strand = c("+", "+", "-", "-")
+        interactionID = c(1, 1, 1, 2, 3), chrom = "chr1",
+        start = c(31, 31, 31, 61, 71), end = c(60, 60, 60, 90, 100),
+        geneID = c("A", "B", "C", "C", "C"),
+        tss = c(21, 21, 70, 70, 70),
+        strand = c("+", "+", "-", "-", "-")
     )
     attr(dt2, "seqinfo") <- seqinfo(st)
     attr(dt2, "keyType") <- "ENTREZID"
