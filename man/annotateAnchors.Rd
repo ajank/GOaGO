@@ -9,7 +9,7 @@ annotateAnchors(
   transcripts = NULL,
   tss = NULL,
   keyType = NULL,
-  maxDistanceToTSS = 0
+  maxDistanceToTSS = -1
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ annotateAnchors(
 it cannot be determined from metadata of \code{transcripts} or \code{tss}}
 
 \item{maxDistanceToTSS}{maximal distance to extend the search for nearest
-TSS outside the anchor}
+TSS outside the anchor, or -1 (the default) to skip the extension}
 }
 \value{
 A data table with columns \code{interactionID} (index of the

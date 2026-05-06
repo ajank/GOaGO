@@ -23,7 +23,8 @@ importFrom("data.table", ".I", ":=", "as.data.table", "data.table", "dcast",
     "setcolorder", "setkey", "setnafill")
 importFrom("DOSE", "theme_dose")
 importFrom("GenomeInfoDb", "seqinfo", "seqnames")
-importFrom("GenomicRanges", "distance", "GRanges", "nearest", "resize")
+importFrom("GenomicRanges", "distance", "findOverlaps", "GRanges", "pintersect",
+    "resize")
 importFrom("ggplot2", ".data", "aes", "element_text", "expansion", "geom_point",
     "ggplot", "label_wrap_gen", "labs", "scale_color_manual",
     "scale_fill_manual", "scale_size", "scale_size_area", "scale_x_continuous",
