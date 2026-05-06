@@ -134,7 +134,7 @@ convertTranscriptsToTSS <- function(
 ##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL", if
 ##'   it cannot be determined from metadata of \code{transcripts} or \code{tss}
 ##' @param maxDistanceToTSS maximal distance to extend the search for nearest
-##'   TSS outside the anchor
+##'   TSS outside the anchor, or -1 (the default) to skip the extension
 ##'
 ##' @returns A data table with columns \code{interactionID} (index of the
 ##'   anchor), \code{chrom}, \code{start}, \code{end} (coordinates of the
@@ -163,14 +163,14 @@ convertTranscriptsToTSS <- function(
 ##' annotateAnchors(gr + 10e3, tss)
 annotateAnchors <- function(
     anchors, transcripts = NULL, tss = NULL, keyType = NULL,
-    maxDistanceToTSS = 0
+    maxDistanceToTSS = -1
 ) {
     # prevent "no visible binding for global variable" NOTEs in R CMD check
-    distance_to_tss <- NULL
+    distance_to_tss <- min_distance_to_tss <- NULL
 
-    # find all nearest TSSes for each anchor
+    # for each anchor, find all TSSes not further away than maxDistanceToTSS
     tss <- .determine_tss(transcripts, tss)
-    ov <- nearest(anchors, tss, select = "all")
+    ov <- findOverlaps(anchors, tss, maxgap = maxDistanceToTSS)
 
     # keep information on anchor coordinates, distance to the nearest TSS,
     # as well as gene ID, position (1-based) and strand of the nearest TSS
@@ -179,16 +179,21 @@ annotateAnchors <- function(
         chrom = as.vector(seqnames(anchors))[queryHits(ov)],
         start = start(anchors)[queryHits(ov)],
         end = end(anchors)[queryHits(ov)],
-        distance_to_tss = distance(anchors[queryHits(ov)],
-            tss[subjectHits(ov)]),
+        distance_to_tss = ifelse(
+            width(pintersect(anchors[queryHits(ov)], tss[subjectHits(ov)])) > 0,
+            -1L,
+            distance(anchors[queryHits(ov)], tss[subjectHits(ov)])
+        ),
         geneID = tss$geneID[subjectHits(ov)],
         tss = start(tss)[subjectHits(ov)],
         strand = as.vector(strand(tss))[subjectHits(ov)]
     )
 
-    # keep only the TSSes not further away than maxDistanceToTSS
-    nearest_tss <- nearest_tss[distance_to_tss <= maxDistanceToTSS, ]
-    nearest_tss$distance_to_tss <- NULL
+    # for each anchor, keep only the nearest TSSes (possibly more than one)
+    nearest_tss[, min_distance_to_tss := min(distance_to_tss), by = "interactionID"]
+    nearest_tss <- nearest_tss[distance_to_tss == min_distance_to_tss, ]
+    nearest_tss[, min_distance_to_tss := NULL]
+    nearest_tss[, distance_to_tss := NULL]
 
     # keep seqinfo and keyType from gene TSSes as attributes
     attr(nearest_tss, "seqinfo") <- seqinfo(tss)
@@ -216,7 +221,7 @@ annotateAnchors <- function(
 ##' @param keyType type of gene identifiers, such as "ENTREZID" or "ENSEMBL", if
 ##'   it cannot be determined from metadata of \code{transcripts} or \code{tss}
 ##' @param maxDistanceToTSS maximal distance to extend the search for nearest
-##'   TSS outside the anchor
+##'   TSS outside the anchor, or -1 (the default) to skip the extension
 ##'
 ##' @returns A data table with columns \code{interactionID} (index of the
 ##'   interaction), \code{chrom1}, \code{start1}, \code{end1}, \code{chrom2},
@@ -242,7 +247,7 @@ annotateAnchors <- function(
 ##' annotateInteractions(pairs, transcripts, maxDistanceToTSS = 10e3)
 annotateInteractions <- function(
     interactions, transcripts = NULL, tss = NULL, keyType = NULL,
-    maxDistanceToTSS = 0
+    maxDistanceToTSS = -1
 ) {
     # extract the two interacting regions
     if (inherits(interactions, "Pairs")) {
